@@ -1,0 +1,45 @@
+[
+  {
+    "namespace": "aecreations",
+    "functions": [
+      {
+	"name": "alert",
+	"description": "Displays a message in a native modal message box",
+	"type": "function",
+        "async": true,
+        "parameters": [
+	  {
+	    "name": "title",
+	    "type": "string",
+	    "description": "Alert dialog title bar text"
+	  },
+	  {
+	    "name": "msg",
+	    "type": "string",
+	    "description": "The message to display"
+	  }
+	]
+      },
+      {
+	"name": "getPref",
+	"description": "Retrieves the value of the given pref",
+	"type": "function",
+	"async": true,
+	"parameters": [
+	  {
+	    "name": "prefKey",
+	    "type": "string",
+	    "description": "The pref key"
+	  }
+	]
+      },
+      {
+	"name": "detectClippingsJSONFile",
+	"description": "Checks if the Clippings JSON file exists in the user profile folder",
+	"type": "function",
+	"async": true,
+	"parameters": []
+      }
+    ]
+  }
+]

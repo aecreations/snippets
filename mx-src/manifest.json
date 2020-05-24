@@ -1,0 +1,55 @@
+{
+  "manifest_version": 2,
+  "name": "Snippets",
+  "description": "Save snippets of text for pasting into messages. A demo MailExtension for Thunderbird.",
+  "version": "0.1",
+  "author": "AE Creations",
+  "applications": {
+    "gecko": {
+      "id": "snippets@aecreations.github.io",
+      "strict_min_version": "77.0b3"
+    }
+  },
+  "icons": {
+    "32": "img/icon32.png",
+    "64": "img/icon64.png"
+  },
+
+  "permissions": [
+    "compose",
+    "downloads",
+    "menus",
+    "storage",
+    "unlimitedStorage"
+  ],
+
+  "background": {
+    "scripts": [
+      "lib/dexie/dexie.min.js",
+      "modules/aeConst.js",
+      "background.js"
+    ]
+  },
+
+  "compose_action": {
+    "default_title": "Snippets",
+    "default_area": "maintoolbar"
+  },
+
+  "experiment_apis": {
+    "aecreations": {
+      "schema": "schema.json",
+      "parent": {
+        "scopes": [
+          "addon_parent"
+        ],
+        "paths": [
+          [
+            "aecreations"
+          ]
+        ],
+        "script": "implementation.js"
+      }
+    }
+  }
+}
