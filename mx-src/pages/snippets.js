@@ -69,6 +69,12 @@ async function init()
     //messenger.windows.remove(messenger.windows.WINDOW_ID_CURRENT);
   });
 
+  $("move-up").addEventListener("click", e => {moveUp()});
+  
+  $("move-down").addEventListener("click", e => {moveDown()});
+  
+  $("delete").addEventListener("click", e => {deleteSnippet()});
+
   messenger.runtime.onMessage.addListener(async (msg) => {
     if (msg.id == "new-from-selection") {
       gSnippets.log(`Snippets: Extension page received message "${msg.id}"`);
@@ -118,6 +124,47 @@ async function initSnippetsList(clearList)
   if (snippetsList.length > 0) {
     snippetsList.selectedIndex = 0;
     snippetsList.focus();
+  }
+}
+
+
+function moveUp()
+{
+  window.alert("The selected action is not available right now.");
+}
+
+
+function moveDown()
+{
+  window.alert("The selected action is not available right now.");
+}
+
+
+function deleteSnippet()
+{
+  let db = gSnippets.getSnippetsDB();
+  let snippetsList = $("snippets-list");
+  let selectedIdx = snippetsList.selectedIndex;
+
+  if (selectedIdx == -1) {
+    return;
+  }
+
+  let selectedOpt = snippetsList.options[selectedIdx];
+  let snippetID = Number(selectedOpt.value);
+
+  if (snippetID == 0) {
+    return;
+  }
+
+  db.snippets.delete(snippetID);
+  snippetsList.removeChild(selectedOpt);
+
+  if (selectedIdx >= snippetsList.options.length) {
+    snippetsList.selectedIndex = snippetsList.length - 1;
+  }
+  else {
+    snippetsList.selectedIndex = selectedIdx;
   }
 }
 
