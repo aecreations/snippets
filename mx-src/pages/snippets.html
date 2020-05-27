@@ -8,13 +8,7 @@
     <meta charset="utf-8">
     <title>Snippets</title>
 
-    <style>
-      body, button, select > option { font-size: 12px; }
-      #new-snippet-content, #snippets-list { display: block; margin-bottom: 8px; }
-      #create-confirm, #new-from-selection-confirm { visibility: hidden; color: darkgreen; }
-      #snippets-list { width: 220px; }
-      .error { color: red; }
-    </style>
+    <link rel="stylesheet" href="snippets.css">
   </head>
 
   <body>
@@ -31,10 +25,17 @@
 
     <hr>
 
-    <p>
-      <select id="snippets-list" size="8"></select>
-      <button id="insert-snippet">Insert</button>
-    </p>
+    <div id="snippets-list-sxs">
+      <div id="manage-actions">
+	<button id="move-up">Move Up</button>
+	<button id="move-down">Move Down</button>
+	<button id="delete">Delete</button>
+      </div>
+      <p>
+	<select id="snippets-list" size="8"></select>
+	<button id="insert-snippet">Insert</button>
+      </p>
+    </div>
 
     <script src="../modules/aeConst.js"></script>
     <script src="snippets.js"></script>

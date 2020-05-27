@@ -1,0 +1,40 @@
+/* -*- mode: javascript; tab-width: 8; indent-tabs-mode: nil; js-indent-level: 2 -*- */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+body,
+button,
+select > option {
+    font-size: 12px;
+}
+
+.error {
+    color: red;
+}
+
+#new-snippet-content,
+#snippets-list {
+    display: block;
+    margin-bottom: 8px;
+}
+
+#create-confirm,
+#new-from-selection-confirm {
+    visibility: hidden;
+    color: darkgreen;
+}
+
+#snippets-list {
+    width: 220px;
+}
+
+#manage-actions {
+    float: right;
+}
+
+#manage-actions > button {
+    display: block;
+    margin-bottom: 8px;
+}
+
