@@ -22,7 +22,7 @@ async function init()
 
   initSnippetsList();
 
-  $("new-from-selection").addEventListener("click", async (e) => {
+  $("get-selection").addEventListener("click", e => {
     let compTabID = gSnippets.getComposeTabID();
     let injectOpts = {
       code: `getSelectedText();`,
@@ -75,7 +75,7 @@ async function init()
   
   $("delete").addEventListener("click", e => {deleteSnippet()});
 
-  messenger.runtime.onMessage.addListener(async (msg) => {
+  messenger.runtime.onMessage.addListener(msg => {
     if (msg.id == "new-from-selection") {
       gSnippets.log(`Snippets: Extension page received message "${msg.id}"`);
 
@@ -83,10 +83,7 @@ async function init()
 	return;
       }
 
-      await createSnippet(msg.content);
-
-      $("new-from-selection-confirm").style.visibility = "visible";
-      window.setTimeout(() => {$("new-from-selection-confirm").style.visibility = "hidden"}, TIMEOUT_MS);
+      $("new-snippet-content").value = msg.content;
     }
   });
 }
