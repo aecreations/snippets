@@ -27,7 +27,7 @@ function getSelectedText()
 }
 
 
-function insertSnippet(content, isPlainText)
+function insertSnippet(content, isPlainText, htmlPasteMode)
 {
   log("Snippets::compose.js: >> insertSnippet()");
   
@@ -35,7 +35,7 @@ function insertSnippet(content, isPlainText)
     document.execCommand("insertText", false, content);
   }
   else {
-    insertTextIntoRichTextEditor(document, content, true, HTMLPASTE_AS_IS);
+    insertTextIntoRichTextEditor(document, content, true, htmlPasteMode);
   }
 }
 

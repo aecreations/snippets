@@ -5,14 +5,16 @@
 
 
 let gSnippetsDB;
+let gPrefs;
 let gComposeTabID;
 
 
-messenger.runtime.onInstalled.addListener(install => {
+messenger.runtime.onInstalled.addListener(async (install) => {
   if (install.reason == "install") {
     info("Snippets: Extension installed.");
-    init();
-    detectLegacyClippings();
+    await setDefaultPrefs();
+    await init();
+    await detectLegacyClippings();
   }
   else if (install.reason == "update") {
     let oldVer = install.previousVersion;
@@ -23,18 +25,18 @@ messenger.runtime.onInstalled.addListener(install => {
   }
 });
 
-messenger.runtime.onStartup.addListener(() => {
+messenger.runtime.onStartup.addListener(async () => {
+  gPrefs = await browser.storage.local.get();
   init();
 });
 
 
-function init()
+async function init()
 {
   info("Snippets: Initializing integration with host app...");
 
-  messenger.runtime.getBrowserInfo().then(brws => {
-    log(`Snippets: Host app: ${brws.name} (version ${brws.version})`);
-  });
+  let hostApp = await messenger.runtime.getBrowserInfo();
+  log(`Snippets: Host app: ${hostApp.name} (version ${hostApp.version})`);
 
   log("Initializing Snippets database");
   
@@ -45,17 +47,18 @@ function init()
 
   gSnippetsDB.open().catch(err => { onError(err) });
 
-  messenger.runtime.onMessage.addListener(msg => {
+  messenger.runtime.onMessage.addListener(async (msg) => {
     if (msg.id == "insert-snippet") {
-      messenger.compose.getComposeDetails(gComposeTabID).then(composeInfo => {
-        log(`Snippets: Handling message "${msg.id}".  Compose window tab ID: ${gComposeTabID}`);
+      let htmlPasteMode = gPrefs.htmlPasteMode;
+
+      let comp = await messenger.compose.getComposeDetails(gComposeTabID);
+      log(`Snippets: Handling message "${msg.id}".  Compose window tab ID: ${gComposeTabID}`);
         
-        let injectOpts = {
-          code: `insertSnippet("${msg.content}", ${composeInfo.isPlainText});`
-        };
+      let injectOpts = {
+        code: `insertSnippet("${msg.content}", ${comp.isPlainText}, ${htmlPasteMode});`
+      };
         
-        messenger.tabs.executeScript(gComposeTabID, injectOpts);
-      });
+      messenger.tabs.executeScript(gComposeTabID, injectOpts);
     }
   });
   
@@ -70,26 +73,36 @@ function init()
 }
 
 
-function detectLegacyClippings()
+async function setDefaultPrefs()
 {
-  messenger.aecreations.getPref("extensions.aecreations.clippings.first_run").then(prefVal => {
-    if (prefVal === undefined) {
-      log("It doesn't appear that Clippings 5.7 or older was installed.");
-      return null;
-    }
-    else {
-      return messenger.aecreations.detectClippingsJSONFile();
-    }
-  }).then(fileData => {
-    if (fileData) {
-      let clippings = JSON.parse(fileData);
-      log(`Found the Clippings JSON file\nVersion: ${clippings.version}\nCreated by: ${clippings.createdBy}`);
-    }
-    else if (fileData === false) {
-      log("Clippings JSON file not found");
-    }
-  });
+  let aeSnippetsPrefs = {
+    htmlPasteMode: aeConst.HTMLPASTE_AS_FORMATTED,
+  };
+
+  gPrefs = aeSnippetsPrefs;
+  await browser.storage.local.set(aeSnippetsPrefs);
 }
+
+
+async function detectLegacyClippings()
+{
+  let prefVal = await messenger.aecreations.getPref("extensions.aecreations.clippings.first_run");
+  if (prefVal === undefined) {
+    log("It doesn't appear that Clippings 5.7 or older was installed.");
+    return null;
+  }
+
+  // TO DO: Search in the data source folder location which may be set by the user.
+  let fileData = await messenger.aecreations.detectClippingsJSONFile();
+  if (fileData) {
+    let clippings = JSON.parse(fileData);
+    log(`Found the Clippings JSON file\nVersion: ${clippings.version}\nCreated by: ${clippings.createdBy}`);
+  }
+  else if (fileData === false) {
+    log("Clippings JSON file not found");
+  }
+}
+
 
 // Applicable if no popup defined for composeAction.
 messenger.composeAction.onClicked.addListener(tab => {

@@ -7,4 +7,9 @@
 let aeConst = {
   DEBUG: true,
   MAX_SNIPPET_NAME_LEN: 32,
+
+  // Constants for HTML paste options
+  HTMLPASTE_ASK_THE_USER: 0,
+  HTMLPASTE_AS_FORMATTED: 1,
+  HTMLPASTE_AS_IS:        2,
 };
