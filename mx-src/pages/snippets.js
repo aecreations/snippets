@@ -38,7 +38,7 @@ async function init()
     if (content.trim() == "") {
       return;
     }
-    
+
     await createSnippet(content);
     
     $("create-confirm").style.visibility = "visible";
@@ -95,7 +95,8 @@ async function createSnippet(content)
   content.length > aeConst.MAX_SNIPPET_NAME_LEN && (name += "...");
       
   let db = gSnippets.getSnippetsDB();
-  let newSnippetID = await db.snippets.add({name, content});
+  let numSnippets = await db.snippets.count();
+  let newSnippetID = await db.snippets.add({name, content, displayOrder: numSnippets + 1});
   await initSnippetsList(true);
 }
 
@@ -127,19 +128,32 @@ async function initSnippetsList(clearList)
 
 function moveUp()
 {
-  window.alert("The selected action is not available right now.");
+  let snippetsList = $("snippets-list");
+  let selectedIdx = snippetsList.selectedIndex;
+  
+  if (selectedIdx == 0 || selectedIdx == -1) {
+    return;
+  }
+
+  // TO DO: Finish implementation.
 }
 
 
 function moveDown()
 {
-  window.alert("The selected action is not available right now.");
+  let snippetsList = $("snippets-list");
+  let selectedIdx = snippetsList.selectedIndex;
+
+  if (selectedIdx == snippetsList.options.length - 1) {
+    return;
+  }
+
+  // TO DO: Finish implementation.
 }
 
 
 function deleteSnippet()
 {
-  let db = gSnippets.getSnippetsDB();
   let snippetsList = $("snippets-list");
   let selectedIdx = snippetsList.selectedIndex;
 
@@ -154,7 +168,10 @@ function deleteSnippet()
     return;
   }
 
+  let db = gSnippets.getSnippetsDB();
   db.snippets.delete(snippetID);
+  updateDisplayOrder(db);
+  
   snippetsList.removeChild(selectedOpt);
 
   if (selectedIdx >= snippetsList.options.length) {
@@ -163,6 +180,15 @@ function deleteSnippet()
   else {
     snippetsList.selectedIndex = selectedIdx;
   }
+}
+
+
+function updateDisplayOrder(snippetsDB)
+{
+  let seq = 1;
+  snippetsDB.snippets.toCollection().modify(snippet => {
+    snippet.displayOrder = seq++;
+  });
 }
 
 
