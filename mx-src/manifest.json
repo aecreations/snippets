@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Snippets",
   "description": "Save snippets of text for pasting into messages. A demo MailExtension for Thunderbird.",
-  "version": "0.1+",
+  "version": "0.2",
   "author": "AE Creations",
   "applications": {
     "gecko": {
