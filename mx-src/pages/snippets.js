@@ -7,6 +7,7 @@
 const TIMEOUT_MS = 2500;
 
 let gSnippets;
+let gSortable;
 
 
 function $(eltID)
@@ -69,11 +70,29 @@ async function init()
     //messenger.windows.remove(messenger.windows.WINDOW_ID_CURRENT);
   });
 
-  $("move-up").addEventListener("click", e => {moveUp()});
-  
-  $("move-down").addEventListener("click", e => {moveDown()});
-  
+  $("dnd-rearrange").addEventListener("click", e => {dndRearrange()});
+
   $("delete").addEventListener("click", e => {deleteSnippet()});
+
+  let sortableList = $("snippets-sortable-list");
+  let sortableOpts = {
+    onStart(aEvent)
+    {
+      aEvent.target.classList.add("dnd-active");
+    },
+
+    onEnd(aEvent)
+    {
+      aEvent.target.classList.remove("dnd-active");
+    }
+  };
+  
+  gSortable = new Sortable(sortableList, sortableOpts);
+
+  document.querySelector("#rearrange-snippets > .dlg-buttons > .btn-accept")
+    .addEventListener("click", e => {applyDndRearrange()});
+  document.querySelector("#rearrange-snippets > .dlg-buttons > .btn-cancel")
+    .addEventListener("click", e => {cancelDndRearrange()});
 
   messenger.runtime.onMessage.addListener(msg => {
     if (msg.id == "new-from-selection") {
@@ -111,8 +130,8 @@ async function initSnippetsList(clearList)
       snippetsList.removeChild(snippetsList.firstChild);
     }
   }
-  
-  await db.snippets.each(snippet => {
+
+  await db.snippets.orderBy("displayOrder").each(snippet => {
     let option = document.createElement("option");
     option.value = snippet.id;
     option.textContent = snippet.name;
@@ -126,29 +145,57 @@ async function initSnippetsList(clearList)
 }
 
 
-function moveUp()
+function dndRearrange()
 {
-  let snippetsList = $("snippets-list");
-  let selectedIdx = snippetsList.selectedIndex;
-  
-  if (selectedIdx == 0 || selectedIdx == -1) {
-    return;
-  }
+  $("main-window").style.display = "none";
+  $("rearrange-snippets").style.display = "block";
 
-  // TO DO: Finish implementation.
+  initRearrangeDialog();
 }
 
 
-function moveDown()
+function initRearrangeDialog()
 {
-  let snippetsList = $("snippets-list");
-  let selectedIdx = snippetsList.selectedIndex;
+  let db = gSnippets.getSnippetsDB();
+  let sortableList = $("snippets-sortable-list");
 
-  if (selectedIdx == snippetsList.options.length - 1) {
-    return;
+  db.snippets.orderBy("displayOrder").each(snippet => {
+    let listItem = document.createElement("div");
+    listItem.dataset.id = snippet.id;
+    let listItemTxt = document.createTextNode(snippet.name);
+    listItem.appendChild(listItemTxt);
+    
+    sortableList.appendChild(listItem);
+  });
+}
+
+
+function applyDndRearrange()
+{
+  let db = gSnippets.getSnippetsDB();
+  let sortableList = $("snippets-sortable-list");
+  let updates = [];
+  
+  for (let i = 0; i < sortableList.childNodes.length; i++) {
+    let listItem = sortableList.childNodes[i];
+    let snippetID = Number(listItem.dataset.id);
+    updates.push(db.snippets.update(snippetID, {displayOrder: i + 1}));
   }
 
-  // TO DO: Finish implementation.
+  Promise.all(updates).then(results => {
+    sortableList.innerHTML = "";
+    $("main-window").style.display = "block";
+    $("rearrange-snippets").style.display = "none";
+    initSnippetsList(true);
+  });
+}
+
+
+function cancelDndRearrange()
+{
+  $("snippets-sortable-list").innerHTML = "";
+  $("main-window").style.display = "block";
+  $("rearrange-snippets").style.display = "none"; 
 }
 
 

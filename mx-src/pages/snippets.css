@@ -13,6 +13,10 @@ select > option {
     color: red;
 }
 
+#rearrange-snippets {
+  display: none;
+}
+
 #new-snippet-content,
 #snippets-list {
     display: block;
@@ -38,3 +42,39 @@ select > option {
     margin-bottom: 8px;
 }
 
+#snippets-sortable-list {
+    width:  100%;
+    max-width: 22em;
+    min-height: 160px;
+    max-height: 160px;
+    overflow-y: auto;
+    margin-bottom: 16px;
+    border: 1px solid ThreeDShadow;
+    background-color: #ddd;
+}
+
+#snippets-sortable-list > div {
+    margin: 1px;
+    padding: 3px 3px 3px 18px;
+    border: 1px solid #bbb;
+    background-color: #eee;
+/*    background-image: url("chrome://clippings/skin/images/grippy.svg");*/
+    background-position: left;
+    background-size: contain;
+    background-repeat: no-repeat;
+    font-size: 11.5px;
+}
+
+#snippets-sortable-list > div:hover {
+    cursor: grab;
+}
+
+#snippets-sortable-list > div:active {
+    background-color: #ccc;
+    cursor: grabbing;
+}
+
+#snippets-sortable-list > .dnd-active {
+    color: #fff;
+    background-color: #bbb;
+}

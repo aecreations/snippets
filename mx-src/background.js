@@ -44,6 +44,9 @@ async function init()
   gSnippetsDB.version(1).stores({
     snippets: "++id, name"
   });
+  gSnippetsDB.version(2).stores({
+    snippets: "++id, name, displayOrder"
+  });
 
   gSnippetsDB.open().catch(err => { onError(err) });
 

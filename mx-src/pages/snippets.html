@@ -12,30 +12,41 @@
   </head>
 
   <body>
-    <p>
-      <button id="get-selection">Get Selection</button>
-    </p>
+    <div id="main-window">
+      <p><button id="get-selection">Get Selection</button></p>
 
-    <p>
-      <textarea id="new-snippet-content" placeholder="New snippet content" cols="32" rows="4"></textarea>
-      <button id="create">Create Snippet</button>
-      <span id="create-confirm">New snippet created</span>
-    </p>
-
-    <hr>
-
-    <div id="snippets-list-sxs">
-      <div id="manage-actions">
-	<button id="move-up">Move Up</button>
-	<button id="move-down">Move Down</button>
-	<button id="delete">Delete</button>
-      </div>
       <p>
-	<select id="snippets-list" size="8"></select>
-	<button id="insert-snippet">Insert</button>
+	<textarea id="new-snippet-content" placeholder="New snippet content" cols="32" rows="4"></textarea>
+	<button id="create">Create Snippet</button>
+	<span id="create-confirm">New snippet created</span>
       </p>
-    </div>
 
+      <hr>
+
+      <div id="snippets-list-sxs">
+	<div id="manage-actions">
+	  <button id="dnd-rearrange">Rearrange...</button>
+	  <button id="delete">Delete</button>
+	</div>
+	<p>
+	  <select id="snippets-list" size="8"></select>
+	  <button id="insert-snippet">Insert</button>
+	</p>
+      </div>
+    </div> <!-- /main -->
+
+    <div id="rearrange-snippets">
+      <p class="instructions">Arrange snippets using drag and drop.</p>
+
+      <div id="snippets-sortable-list"></div>
+
+      <div class="dlg-buttons">
+        <button class="btn-accept">OK</button>
+        <button class="btn-cancel">Cancel</button>
+      </div>
+    <div>
+
+    <script src="../lib/Sortable.js"></script>
     <script src="../modules/aeConst.js"></script>
     <script src="snippets.js"></script>
   </body>
