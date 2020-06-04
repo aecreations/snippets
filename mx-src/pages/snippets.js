@@ -140,6 +140,7 @@ async function initSnippetsList(clearList)
 
   if (snippetsList.length > 0) {
     snippetsList.selectedIndex = 0;
+    snippetsList.scrollTo(0, 0);
     snippetsList.focus();
   }
 }
@@ -166,6 +167,8 @@ function initRearrangeDialog()
     listItem.appendChild(listItemTxt);
     
     sortableList.appendChild(listItem);
+  }).then(() => {
+    sortableList.scrollTo(0, 0);
   });
 }
 
