@@ -19,6 +19,13 @@ On first run, Snippets will detect if there is a Clippings backup JSON data file
 
 The user interface is very minimal and rather awkward to use, due to missing capabilities such as adding to the message composer context menu.  As this is a proof-of-concept MailExtension, expect numerous bugs and gaps in functionality.  See the [list of issues](https://github.com/aecreations/snippets/issues) for an up-to-date list.
 
+### How To Get It
+
+1. Click [Releases](https://github.com/aecreations/snippets/releases) at the top
+2. Look for the latest release in the list and download the zip file
+3. Launch Thunderbird, open Add-ons Manager, then click the gear icon and select "Install Add-on From File"
+4. Locate the saved zip file and open it
+
 ### To Do
 
 - Edit a snippet
