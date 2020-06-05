@@ -28,7 +28,7 @@ The user interface is very minimal and rather awkward to use, due to missing cap
 5. Click "Load Temporary Add-on" and select the file named "manifest.json" in the folder where the zip file was unzipped
 
 **Notes:**
-1. Snippets will only be loaded for the duration of your Thunderbird session, and will uninstall itself automatically when quitting (but the data will be saved unless you removed Snippets from the Thunderbird Debugging tab).  You will need to repeat step 5 above to reload it when Thunderbird is started again.
+1. Snippets will only be loaded for the duration of your Thunderbird session, and will uninstall itself automatically when quitting (but the data will be saved unless you removed Snippets from the Thunderbird Debugging tab).  You will need to repeat step 5 above to reload Snippets when Thunderbird is started again.
 2. Do NOT attempt to install Snippets directly from the zip file.  There is a bug in Thunderbird where an extension won't uninstall itself if you want to remove it!
 
 ### To Do
