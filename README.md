@@ -25,7 +25,7 @@ The user interface is very minimal and rather awkward to use, due to missing cap
 2. Look for the latest release in the list and download the zip file
 3. Open the zip file and unzip it to a location on your system
 4. Launch Thunderbird, open Add-ons Manager, then click the gear icon and select "Debug Add-ons"
-5. Click "Load Temporary Add-on" and locate the file named "manifest.json" in the folder where the zip file was unzipped
+5. Click "Load Temporary Add-on" and select the file named "manifest.json" in the folder where the zip file was unzipped
 
 **Notes:**
 1. Snippets will only be loaded for the duration of your Thunderbird session, and will uninstall automatically when quitting Thunderbird (but the data will be saved, unless you uninstall it).  You will need to repeat step 5 above to reload it when Thunderbird is started again.
