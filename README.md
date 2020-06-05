@@ -28,14 +28,15 @@ The user interface is very minimal and rather awkward to use, due to missing cap
 5. Click "Load Temporary Add-on" and select the file named "manifest.json" in the folder where the zip file was unzipped
 
 **Notes:**
-1. Snippets will only be loaded for the duration of your Thunderbird session, and will uninstall itself automatically when quitting (but the data will be saved unless you removed Snippets from the Thunderbird Debugging tab).  You will need to repeat step 5 above to reload Snippets when Thunderbird is started again.
-2. Do _not_ attempt to add Snippets to Thunderbird by installing the zip file from Add-ons Manager!  There is currently a bug in Thunderbird where an extension won't uninstall itself from Add-ons Manager.
+- Snippets will only be loaded for the duration of your Thunderbird session, and will uninstall itself automatically when quitting (but the data will be saved unless you removed Snippets from the Thunderbird Debugging tab).  You will need to repeat step 5 above to reload Snippets when Thunderbird is started again.
+- Do _not_ attempt to add Snippets to Thunderbird by installing the zip file from Add-ons Manager!  There is currently a bug in Thunderbird where an extension won't uninstall itself from Add-ons Manager.
 
 ### To Do
 
 - Edit a snippet
 - Export snippets to a Clippings 6 JSON file
 - Keyboard shortcut in the message composer to display the Snippets popup window
+- Extension pref UI for HTML insert mode (as rich text, or with HTML tags)
 - Placeholders for date, time, and snippet name
 - Detect Clippings JSON file in a user-specified folder location (read the Clippings user pref `extensions.aecreations.clippings.datasource.location` and check for non-empty folder path)
 - Move all UI strings into messages.json
