@@ -21,11 +21,11 @@ The user interface is very minimal and rather awkward to use, due to missing cap
 
 ### How To Get It
 
-1. Click [Releases](https://github.com/aecreations/snippets/releases) at the top
-2. Look for the latest release in the list and download the zip file
-3. Open the zip file and unzip it to a location on your system
-4. Launch Thunderbird, open Add-ons Manager, then click the gear icon and select "Debug Add-ons"
-5. Click "Load Temporary Add-on" and select the file named "manifest.json" in the folder where the zip file was unzipped
+1. Click [Releases](https://github.com/aecreations/snippets/releases) at the top.
+2. Look for the latest release in the list and download the zip file.
+3. Open the zip file and unzip it to a location on your system.
+4. Launch Thunderbird, open Add-ons Manager, then click the gear icon and select "Debug Add-ons".
+5. Click "Load Temporary Add-on" and select the file named "manifest.json" in the folder where the zip file was unzipped.
 
 **Notes:**
 - Snippets will only be loaded for the duration of your Thunderbird session, and will uninstall itself automatically when quitting (but the data will be saved unless you removed Snippets from the Thunderbird Debugging tab).  You will need to repeat step 5 above to reload Snippets when Thunderbird is started again.
