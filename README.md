@@ -3,6 +3,8 @@
 
 Snippets was created during the course of an investigation of [MailExtensions APIs](https://thunderbird-webextensions.readthedocs.io/en/latest/index.html) for reading and modifying message composer content, IndexedDB support, ability to add menu items to the message composer context menu, opening extension pages in popup windows, and using experimental APIs.  The goal is to use this knowledge to port [Clippings for Thunderbird](https://github.com/aecreations/clippings-tb) to a MailExtension.
 
+Requires Thunderbird 77 beta 3 or newer.
+
 ### Features
 
 - Create a snippet from selected text in the message composer
