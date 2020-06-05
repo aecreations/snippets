@@ -23,8 +23,13 @@ The user interface is very minimal and rather awkward to use, due to missing cap
 
 1. Click [Releases](https://github.com/aecreations/snippets/releases) at the top
 2. Look for the latest release in the list and download the zip file
-3. Launch Thunderbird, open Add-ons Manager, then click the gear icon and select "Install Add-on From File"
-4. Locate the saved zip file and open it
+3. Open the zip file and unzip it to a location on your system
+4. Launch Thunderbird, open Add-ons Manager, then click the gear icon and select "Debug Add-ons"
+5. Click "Load Temporary Add-on" and locate the file named "manifest.json" in the folder where the zip file was unzipped
+
+**Notes:**
+1. Snippets will only be loaded for the duration of your Thunderbird session, and will uninstall automatically when quitting Thunderbird (but the data will be saved, unless you uninstall it).  You will need to repeat step 5 above to reload it when Thunderbird is started again.
+2. Do NOT attempt to install Snippets directly from the zip file.  There is a bug in Thunderbird where an extension won't uninstall itself if you want to remove it!
 
 ### To Do
 
