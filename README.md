@@ -25,8 +25,8 @@ The user interface is very minimal and rather awkward to use, due to missing cap
 - Export snippets to a Clippings 6 JSON file
 - Keyboard shortcut in the message composer to display the Snippets popup window
 - Placeholders for date, time, and snippet name
-- Show all snippets in a Snippets context menu in the message composer - if this still isn't possible in Thunderbird 78 ESR, then put the UI in a compose action popup
-- Move all UI strings into messages.json
 - Detect Clippings JSON file in a user-specified folder location (read the Clippings user pref `extensions.aecreations.clippings.datasource.location` and check for non-empty folder path)
+- Move all UI strings into messages.json
+- Show all snippets in a Snippets context menu in the message composer - if this still isn't possible in Thunderbird 78 ESR, then put the UI in a compose action popup
 - Replace generic extension icon
 - A better popup window, with the unnecessary browser navigation toolbar removed
