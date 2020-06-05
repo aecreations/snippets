@@ -26,5 +26,6 @@ The user interface is very minimal and rather awkward to use, due to missing cap
 - Keyboard shortcut in the message composer to display the Snippets popup window
 - Placeholders for date, time, and snippet name
 - Show all snippets in a Snippets context menu in the message composer - if this still isn't possible in Thunderbird 78 ESR, then put the UI in a compose action popup
+- Move all UI strings into messages.json
 - Replace generic extension icon
 - A better popup window, with the unnecessary browser navigation toolbar removed
