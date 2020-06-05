@@ -7,8 +7,8 @@ Requires Thunderbird 77 beta 3 or newer.
 
 ### Features
 
+- Snippets popup window from where you can select a snippet to insert into a message, as well as create, delete and rearrange snippets. To open it, click the Snippets icon in the message composer toolbar
 - Create a snippet from selected text in the message composer
-- Snippets popup window from where you can select a snippet to insert into a message, as well as create, delete and rearrange snippets
 - Insert a snippet as rich text if it contains HTML tags
 
 ### Things You Should Know About
