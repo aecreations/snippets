@@ -1,0 +1,11 @@
+{
+  "extName": {
+    "message": "Snippets",
+    "description": "Name of the extension - do NOT translate"
+  },
+
+  "extDesc": {
+    "message": "Save snippets of text for pasting into messages. A demo MailExtension for Thunderbird.",
+    "description": "Description of the extension"
+  }
+}

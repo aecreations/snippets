@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "Snippets",
-  "description": "Save snippets of text for pasting into messages. A demo MailExtension for Thunderbird.",
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDesc__",
   "version": "0.2+",
   "author": "AE Creations",
   "applications": {
@@ -51,5 +51,7 @@
         "script": "implementation.js"
       }
     }
-  }
+  },
+
+  "default_locale": "en"
 }
