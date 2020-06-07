@@ -23,56 +23,15 @@ async function init()
 
   initSnippetsList();
 
-  $("get-selection").addEventListener("click", e => {
-    let compTabID = gSnippets.getComposeTabID();
-    let injectOpts = {
-      code: `getSelectedText();`,
-    };
+  $("get-selection").addEventListener("click", e => { getSelectedText() });
 
-    gSnippets.log("Executing compose script at compose tab ID: " + compTabID);
-    
-    messenger.tabs.executeScript(compTabID, injectOpts);
-  });
+  $("create").addEventListener("click", async (e) => { createSnippet() });
 
-  $("create").addEventListener("click", async (e) => {
-    let content = $("new-snippet-content").value;
-    if (content.trim() == "") {
-      return;
-    }
+  $("insert-snippet").addEventListener("click", async (e) => { insertSnippet() });
 
-    await createSnippet(content);
-    
-    $("create-confirm").style.visibility = "visible";
-    window.setTimeout(() => {$("create-confirm").style.visibility = "hidden"}, TIMEOUT_MS);
-    $("new-snippet-content").value = "";
-  });
+  $("dnd-rearrange").addEventListener("click", e => { dndRearrange() });
 
-  $("insert-snippet").addEventListener("click", async (e) => {
-    let snippetsList = $("snippets-list");
-    let selectedOpt = snippetsList.options[snippetsList.selectedIndex];
-    if (! selectedOpt) {
-      return;
-    }
-
-    let db = gSnippets.getSnippetsDB();
-    let snippetID = Number(selectedOpt.value);
-    let snippet = await db.snippets.get(snippetID);
-    let msg = {
-      id: "insert-snippet",
-      content: snippet.content,
-    };
-
-    // BUG: This will throw an error if `msg.content` contains unescaped line breaks!
-    await messenger.runtime.sendMessage(msg);
-
-    // Close the popup window.
-    // BUG - This doesn't work (the value of the window ID is always -1)
-    //messenger.windows.remove(messenger.windows.WINDOW_ID_CURRENT);
-  });
-
-  $("dnd-rearrange").addEventListener("click", e => {dndRearrange()});
-
-  $("delete").addEventListener("click", e => {deleteSnippet()});
+  $("delete").addEventListener("click", e => { deleteSnippet() });
 
   let sortableList = $("snippets-sortable-list");
   let sortableOpts = {
@@ -90,9 +49,9 @@ async function init()
   gSortable = new Sortable(sortableList, sortableOpts);
 
   document.querySelector("#rearrange-snippets > .dlg-buttons > .btn-accept")
-    .addEventListener("click", e => {applyDndRearrange()});
+    .addEventListener("click", e => { applyDndRearrange() });
   document.querySelector("#rearrange-snippets > .dlg-buttons > .btn-cancel")
-    .addEventListener("click", e => {cancelDndRearrange()});
+    .addEventListener("click", e => { cancelDndRearrange() });
 
   messenger.runtime.onMessage.addListener(msg => {
     if (msg.id == "new-from-selection") {
@@ -105,18 +64,6 @@ async function init()
       $("new-snippet-content").value = msg.content;
     }
   });
-}
-
-
-async function createSnippet(content)
-{
-  let name = content.substring(0, aeConst.MAX_SNIPPET_NAME_LEN);
-  content.length > aeConst.MAX_SNIPPET_NAME_LEN && (name += "...");
-      
-  let db = gSnippets.getSnippetsDB();
-  let numSnippets = await db.snippets.count();
-  let newSnippetID = await db.snippets.add({name, content, displayOrder: numSnippets + 1});
-  await initSnippetsList(true);
 }
 
 
@@ -143,6 +90,65 @@ async function initSnippetsList(clearList)
     snippetsList.scrollTo(0, 0);
     snippetsList.focus();
   }
+}
+
+
+function getSelectedText()
+{
+  let compTabID = gSnippets.getComposeTabID();
+  let injectOpts = {
+    code: `getSelectedText();`,
+  };
+
+  gSnippets.log("snippets.js::getSelectedText(): Executing compose script at compose tab ID: " + compTabID);;
+  
+  messenger.tabs.executeScript(compTabID, injectOpts);
+}
+
+
+async function createSnippet()
+{
+  let content = $("new-snippet-content").value;
+  if (content.trim() == "") {
+    return;
+  }
+  
+  let name = content.substring(0, aeConst.MAX_SNIPPET_NAME_LEN);
+  content.length > aeConst.MAX_SNIPPET_NAME_LEN && (name += "...");
+      
+  let db = gSnippets.getSnippetsDB();
+  let numSnippets = await db.snippets.count();
+  let newSnippetID = await db.snippets.add({name, content, displayOrder: numSnippets + 1});
+  await initSnippetsList(true);
+
+  $("create-confirm").style.visibility = "visible";
+  window.setTimeout(() => {$("create-confirm").style.visibility = "hidden"}, TIMEOUT_MS);
+  $("new-snippet-content").value = "";
+}
+
+
+async function insertSnippet()
+{
+  let snippetsList = $("snippets-list");
+  let selectedOpt = snippetsList.options[snippetsList.selectedIndex];
+  if (! selectedOpt) {
+    return;
+  }
+
+  let db = gSnippets.getSnippetsDB();
+  let snippetID = Number(selectedOpt.value);
+  let snippet = await db.snippets.get(snippetID);
+  let msg = {
+    id: "insert-snippet",
+    content: snippet.content,
+  };
+
+  // BUG: This will throw an error if `msg.content` contains unescaped line breaks!
+  await messenger.runtime.sendMessage(msg);
+
+  // Close the popup window.
+  // BUG - This doesn't work (the value of the window ID is always -1)
+  //messenger.windows.remove(messenger.windows.WINDOW_ID_CURRENT);
 }
 
 
@@ -242,4 +248,4 @@ function updateDisplayOrder(snippetsDB)
 }
 
 
-document.addEventListener("DOMContentLoaded", async (e) => {init()}, false);
+document.addEventListener("DOMContentLoaded", async (e) => { init() });
