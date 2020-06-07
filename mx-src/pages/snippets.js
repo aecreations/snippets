@@ -61,7 +61,7 @@ async function init()
 	return;
       }
 
-      $("new-snippet-content").value = msg.content;
+      $("new-snippet-content").value = DOMPurify.sanitize(msg.content);
     }
   });
 }
