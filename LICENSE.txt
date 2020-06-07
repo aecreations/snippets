@@ -18,6 +18,9 @@ below.
 Mozilla Public License Version 2.0
 ==================================
 
+The Mozilla Public License (MPL) version 2.0 applies to Clippings and DOMPurify.
+
+
 1. Definitions
 --------------
 
@@ -624,3 +627,4 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 				    *  *  *
+
