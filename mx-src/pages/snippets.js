@@ -112,9 +112,8 @@ async function createSnippet()
   if (content.trim() == "") {
     return;
   }
-  
-  let name = content.substring(0, aeConst.MAX_SNIPPET_NAME_LEN);
-  content.length > aeConst.MAX_SNIPPET_NAME_LEN && (name += "...");
+
+  let name = gSnippets.createSnippetNameFromText(content);
       
   let db = gSnippets.getSnippetsDB();
   let numSnippets = await db.snippets.count();
