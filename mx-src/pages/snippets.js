@@ -29,7 +29,9 @@ async function init()
 
   $("insert-snippet").addEventListener("click", async (e) => { insertSnippet() });
 
-  $("dnd-rearrange").addEventListener("click", e => { dndRearrange() });
+  $("edit-snippet").addEventListener("click", e => { editSnippet() });
+
+  $("dnd-rearrange").addEventListener("click", async (e) => { dndRearrange() });
 
   $("delete").addEventListener("click", e => { deleteSnippet() });
 
@@ -47,6 +49,11 @@ async function init()
   };
   
   gSortable = new Sortable(sortableList, sortableOpts);
+
+  document.querySelector("#edit > .dlg-buttons > .btn-accept")
+    .addEventListener("click", e => { applyEdit() });
+  document.querySelector("#edit > .dlg-buttons > .btn-cancel")
+    .addEventListener("click", e => { cancelEdit() });
 
   document.querySelector("#rearrange-snippets > .dlg-buttons > .btn-accept")
     .addEventListener("click", e => { applyDndRearrange() });
@@ -128,14 +135,13 @@ async function createSnippet()
 
 async function insertSnippet()
 {
-  let snippetsList = $("snippets-list");
-  let selectedOpt = snippetsList.options[snippetsList.selectedIndex];
-  if (! selectedOpt) {
+  let snippetID = getSelectedSnippetID();
+  if (snippetID == -1) {
+    window.alert("Select a snippet.");
     return;
   }
-
+  
   let db = gSnippets.getSnippetsDB();
-  let snippetID = Number(selectedOpt.value);
   let snippet = await db.snippets.get(snippetID);
   let msg = {
     id: "insert-snippet",
@@ -151,30 +157,95 @@ async function insertSnippet()
 }
 
 
-function dndRearrange()
+function getSelectedSnippetID()
+{
+  let rv;
+  let snippetsList = $("snippets-list");
+  if (snippetsList.selectedIndex != -1) {
+    let selectedOpt = snippetsList.options[snippetsList.selectedIndex];
+    rv = Number(selectedOpt.value);
+  }
+  else {
+    rv = -1;
+  }
+
+  return rv;
+}
+
+
+async function editSnippet()
+{
+  let snippetID = getSelectedSnippetID();
+  if (snippetID == -1) {
+    return;
+  }
+  
+  let db = gSnippets.getSnippetsDB();
+  let snippet = await db.snippets.get(snippetID);
+  
+  $("main-window").style.display = "none";
+  $("edit").style.display = "block";
+
+  initEditDialog(snippet);
+}
+
+
+function initEditDialog(snippet)
+{
+  $("snippet-editor").value = snippet.content;
+}
+
+
+function applyEdit()
+{
+  let snippetID = getSelectedSnippetID();
+  if (snippetID == -1) {
+    // This should never happen.
+    gSnippets.warn("No snippet selected!");
+    return;
+  }
+  
+  let db = gSnippets.getSnippetsDB();
+  let content = DOMPurify.sanitize($("snippet-editor").value);
+  db.snippets.update(snippetID, { content });
+
+  $("main-window").style.display = "block";
+  $("edit").style.display = "none"; 
+  $("snippet-editor").value = "";
+}
+
+
+function cancelEdit()
+{
+  $("main-window").style.display = "block";
+  $("edit").style.display = "none"; 
+}
+
+
+async function dndRearrange()
 {
   $("main-window").style.display = "none";
   $("rearrange-snippets").style.display = "block";
 
-  initRearrangeDialog();
+  await initRearrangeDialog();
 }
 
 
-function initRearrangeDialog()
+async function initRearrangeDialog()
 {
   let db = gSnippets.getSnippetsDB();
   let sortableList = $("snippets-sortable-list");
 
-  db.snippets.orderBy("displayOrder").each(snippet => {
+  await db.snippets.orderBy("displayOrder").each(snippet => {
     let listItem = document.createElement("div");
     listItem.dataset.id = snippet.id;
     let listItemTxt = document.createTextNode(snippet.name);
     listItem.appendChild(listItemTxt);
     
     sortableList.appendChild(listItem);
-  }).then(() => {
-    sortableList.scrollTo(0, 0);
   });
+
+  sortableList.scrollTo(0, 0);
 }
 
 
@@ -209,24 +280,19 @@ function cancelDndRearrange()
 
 function deleteSnippet()
 {
-  let snippetsList = $("snippets-list");
-  let selectedIdx = snippetsList.selectedIndex;
+  let snippetID = getSelectedSnippetID();
 
-  if (selectedIdx == -1) {
-    return;
-  }
-
-  let selectedOpt = snippetsList.options[selectedIdx];
-  let snippetID = Number(selectedOpt.value);
-
-  if (snippetID == 0) {
+  if (snippetID == 0 || snippetID == -1) {
     return;
   }
 
   let db = gSnippets.getSnippetsDB();
   db.snippets.delete(snippetID);
   updateDisplayOrder(db);
-  
+
+  let snippetsList = $("snippets-list");
+  let selectedIdx = snippetsList.selectedIndex;
+  let selectedOpt = snippetsList.options[selectedIdx];
   snippetsList.removeChild(selectedOpt);
 
   if (selectedIdx >= snippetsList.options.length) {

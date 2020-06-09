@@ -25,6 +25,7 @@
 
       <div id="snippets-list-sxs">
 	<div id="manage-actions">
+          <button id="edit-snippet">Edit...</button>
 	  <button id="dnd-rearrange">Rearrange...</button>
 	  <button id="delete">Delete</button>
 	</div>
@@ -34,6 +35,19 @@
 	</p>
       </div>
     </div> <!-- /main -->
+
+    <div id="edit">
+      <p>Edit snippet</p>
+
+      <div id="snippet-editor-content">
+        <textarea id="snippet-editor" cols="48" rows="16"></textarea>
+      </div>
+
+      <div class="dlg-buttons">
+        <button class="btn-accept">OK</button>
+        <button class="btn-cancel">Cancel</button>
+      </div>
+    </div>
 
     <div id="rearrange-snippets">
       <p class="instructions">Arrange snippets using drag and drop.</p>
