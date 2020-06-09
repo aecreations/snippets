@@ -34,7 +34,7 @@ The user interface is very minimal and rather awkward to use, due to missing cap
 ### To Do
 
 - Edit a snippet
-- Export snippets to a Clippings 6 JSON file
+- Import/export snippets to/from a CSV file
 - Keyboard shortcut in the message composer to display the Snippets popup window
 - Extension pref UI for HTML insert mode (as rich text, or with HTML tags)
 - Placeholders for date, time, and snippet name
