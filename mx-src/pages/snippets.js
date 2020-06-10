@@ -51,7 +51,7 @@ async function init()
   gSortable = new Sortable(sortableList, sortableOpts);
 
   document.querySelector("#edit > .dlg-buttons > .btn-accept")
-    .addEventListener("click", e => { applyEdit() });
+    .addEventListener("click", async (e) => { applyEdit() });
   document.querySelector("#edit > .dlg-buttons > .btn-cancel")
     .addEventListener("click", e => { cancelEdit() });
 
@@ -196,7 +196,7 @@ function initEditDialog(snippet)
 }
 
 
-function applyEdit()
+async function applyEdit()
 {
   let snippetID = getSelectedSnippetID();
   if (snippetID == -1) {
@@ -207,11 +207,22 @@ function applyEdit()
   
   let db = gSnippets.getSnippetsDB();
   let content = DOMPurify.sanitize($("snippet-editor").value);
-  db.snippets.update(snippetID, { content });
+  let updatedSnippet = { content };
+  let updateSnippetName = ($("edit-snippet-name").checked && content.length > 0);
+  
+  if (updateSnippetName) {
+    updatedSnippet.name = gSnippets.createSnippetNameFromText(content);
+  }
+  
+  await db.snippets.update(snippetID, updatedSnippet);
 
   $("main-window").style.display = "block";
   $("edit").style.display = "none"; 
   $("snippet-editor").value = "";
+
+  if (updateSnippetName) {
+    initSnippetsList(true);
+  }
 }
 
 

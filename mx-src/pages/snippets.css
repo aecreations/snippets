@@ -42,6 +42,10 @@ select > option {
     margin-bottom: 8px;
 }
 
+#edit-snippet-name + label {
+    margin-right: 16px;
+}
+
 #snippet-editor-content,
 #snippets-sortable-list {
   margin-bottom: 16px;
