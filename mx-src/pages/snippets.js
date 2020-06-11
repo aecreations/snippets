@@ -35,6 +35,10 @@ async function init()
 
   $("delete").addEventListener("click", e => { deleteSnippet() });
 
+  $("close-window").addEventListener("click", e => {
+    messenger.windows.remove(messenger.windows.WINDOW_ID_CURRENT);
+  });
+
   let sortableList = $("snippets-sortable-list");
   let sortableOpts = {
     onStart(aEvent)
