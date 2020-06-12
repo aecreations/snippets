@@ -37,6 +37,16 @@
     "default_area": "maintoolbar"
   },
 
+  "commands" : {
+    "ae-snippets-window": {
+      "suggested_key": {
+	"default": "Ctrl+Shift+S",
+	"mac": "Command+Shift+S"
+      },
+      "description": "Snippets test command"
+    }
+  },
+
   "experiment_apis": {
     "aecreations": {
       "schema": "schema.json",

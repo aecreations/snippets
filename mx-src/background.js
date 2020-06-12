@@ -76,7 +76,22 @@ async function init()
       messenger.tabs.executeScript(gComposeTabID, injectOpts);
     }
   });
-  
+
+  // Applicable if no popup defined for composeAction.
+  messenger.composeAction.onClicked.addListener(tab => {
+    log(`Snippets: composeAction triggered. Active tab ID: ${tab.id}`);
+    gComposeTabID = tab.id;
+    openSnippetsWindow();
+  });
+
+  messenger.commands.onCommand.addListener(async (cmdName) => {
+    if (cmdName == "ae-snippets-window") {
+      let tabs = await messenger.tabs.query({ active: true, currentWindow: true });
+      let activeTabID = tabs[0].id;
+      log(`Snippets: Command "${cmdName}" triggered. Active tab ID: ${activeTabID} (NOT a compose tab!)`);
+    }
+  });
+
   log("Snippets: Initialization complete.");
 }
 
@@ -89,6 +104,18 @@ async function setDefaultPrefs()
 
   gPrefs = aeSnippetsPrefs;
   await browser.storage.local.set(aeSnippetsPrefs);
+}
+
+
+function openSnippetsWindow()
+{
+  let wndOpts = {
+    url: "pages/snippets.html",
+    type: "detached_panel",
+    width: 352, height: 420,
+    left: 64, top: 128
+  };
+  messenger.windows.create(wndOpts);
 }
 
 
@@ -110,21 +137,6 @@ async function detectLegacyClippings()
     log("Clippings JSON file not found");
   }
 }
-
-
-// Applicable if no popup defined for composeAction.
-messenger.composeAction.onClicked.addListener(tab => {
-  gComposeTabID = tab.id;
-
-  let wndOpts = {
-    url: "pages/snippets.html",
-    type: "detached_panel",
-    width: 352, height: 420,
-    left: 64, top: 128
-  };
-
-  messenger.windows.create(wndOpts);
-});
 
 
 function getSnippetsDB()
