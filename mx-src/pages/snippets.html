@@ -28,6 +28,7 @@
           <button id="edit-snippet">Edit...</button>
 	  <button id="dnd-rearrange">Rearrange...</button>
 	  <button id="delete">Delete</button>
+          <button id="import-and-export">Import & Export...</button>
 	</div>
 	<p>
 	  <select id="snippets-list" size="8"></select>
@@ -49,7 +50,7 @@
         <button class="btn-accept">OK</button>
         <button class="btn-cancel">Cancel</button>
       </div>
-    </div>
+    </div> <!-- /edit -->
 
     <div id="rearrange-snippets">
       <p class="instructions">Arrange snippets using drag and drop.</p>
@@ -60,7 +61,27 @@
         <button class="btn-accept">OK</button>
         <button class="btn-cancel">Cancel</button>
       </div>
-    <div>
+    </div> <!-- /rearrange-snippets -->
+
+    <div id="import-export">
+      <p>Import and Export</p>
+
+      <fieldset id="import">
+        <legend>Import</legend>
+        <input type="file" id="import-csv" accept="text/csv">
+        <button id="import-csv">Import CSV</button>
+      </fieldset>
+
+      <fieldset id="export">
+        <legend>Export</legend>
+
+        <button id="export-csv">Export CSV</button>
+      </fieldset>
+      
+      <div class="dlg-buttons">
+        <button class="btn-close">Done</button>
+      </div>
+    </div> <!-- /import-export -->
 
     <script src="../lib/purify.min.js"></script>
     <script src="../lib/Sortable.js"></script>

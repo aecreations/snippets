@@ -13,7 +13,9 @@ select > option {
     color: red;
 }
 
-#edit, #rearrange-snippets {
+#edit,
+#rearrange-snippets,
+#import-export {
   display: none;
 }
 
@@ -85,4 +87,23 @@ select > option {
 #snippets-sortable-list > .dnd-active {
     color: #fff;
     background-color: #bbb;
+}
+
+#import-export fieldset {
+  margin-bottom: 8px;
+}
+
+#import-export > #import > #import-csv {
+  display: block;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+#import-export > #export {
+  margin-bottom: 12px;
+}
+
+#import-export > #export > button {
+  margin-top: 8px;
+  margin-bottom: 8px;
 }

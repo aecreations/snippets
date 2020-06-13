@@ -12,4 +12,7 @@ let aeConst = {
   HTMLPASTE_ASK_THE_USER: 0,
   HTMLPASTE_AS_FORMATTED: 1,
   HTMLPASTE_AS_IS:        2,
+
+  // Import and export
+  CSV_EXPORT_FILENAME: "snippets.csv",
 };

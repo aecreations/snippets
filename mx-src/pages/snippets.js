@@ -35,6 +35,8 @@ async function init()
 
   $("delete").addEventListener("click", e => { deleteSnippet() });
 
+  $("import-and-export").addEventListener("click", e => { importAndExport() });
+
   $("close-window").addEventListener("click", e => {
     messenger.windows.remove(messenger.windows.WINDOW_ID_CURRENT);
   });
@@ -63,6 +65,11 @@ async function init()
     .addEventListener("click", e => { applyDndRearrange() });
   document.querySelector("#rearrange-snippets > .dlg-buttons > .btn-cancel")
     .addEventListener("click", e => { cancelDndRearrange() });
+
+  document.querySelector("#import-export > #export > #export-csv")
+    .addEventListener("click", async (e) => { exportCSV() });
+  document.querySelector("#import-export > .dlg-buttons > .btn-close")
+    .addEventListener("click", e => { closeImportAndExport() });
 
   messenger.runtime.onMessage.addListener(msg => {
     if (msg.id == "new-from-selection") {
@@ -293,6 +300,13 @@ function cancelDndRearrange()
 }
 
 
+function closeImportAndExport()
+{
+  $("import-export").style.display = "none";
+  $("main-window").style.display = "block";
+}
+
+
 function deleteSnippet()
 {
   let snippetID = getSelectedSnippetID();
@@ -324,6 +338,53 @@ function updateDisplayOrder(snippetsDB)
   let seq = 1;
   snippetsDB.snippets.toCollection().modify(snippet => {
     snippet.displayOrder = seq++;
+  });
+}
+
+
+function importAndExport()
+{
+  $("main-window").style.display = "none";
+  $("import-export").style.display = "block";
+}
+
+
+async function exportCSV()
+{ 
+  let db = gSnippets.getSnippetsDB();
+  let expData = [];
+
+  await db.snippets.each(snippet => {
+    let content = snippet.content.replace(/\"/g, '""');
+    expData.push(`"${snippet.name}","${content}"`);
+  });
+
+  let csvData = expData.join("\r\n");
+  let blobData = new Blob([csvData], { type: "text/csv;charset=utf-8" });
+  
+  saveToFile(blobData, aeConst.CSV_EXPORT_FILENAME);
+}
+
+
+function saveToFile(aBlobData, aFilename)
+{
+  messenger.downloads.download({
+    url: URL.createObjectURL(aBlobData),
+    filename: aFilename,
+    saveAs: true
+  }).then(aDownldItemID => {
+    return messenger.downloads.search({ id: aDownldItemID });
+
+  }).then(aDownldItems => {
+
+    if (aDownldItems && aDownldItems.length > 0) {
+      let exportFilePath = aDownldItems[0].filename;
+
+      window.alert(`Snippets export to "${exportFilePath}" is successfully completed.`);
+    }
+  }).catch(aErr => {
+    console.error(aErr);
+    window.alert("Export failed!\n" + aErr);
   });
 }
 
