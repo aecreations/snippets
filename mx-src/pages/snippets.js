@@ -66,6 +66,8 @@ async function init()
   document.querySelector("#rearrange-snippets > .dlg-buttons > .btn-cancel")
     .addEventListener("click", e => { cancelDndRearrange() });
 
+  document.querySelector("#import-export > #import > #import-csv")
+    .addEventListener("click", async (e) => { importCSV() });
   document.querySelector("#import-export > #export > #export-csv")
     .addEventListener("click", async (e) => { exportCSV() });
   document.querySelector("#import-export > .dlg-buttons > .btn-close")
@@ -302,6 +304,7 @@ function cancelDndRearrange()
 
 function closeImportAndExport()
 {
+  $("import-file-picker").value = "";
   $("import-export").style.display = "none";
   $("main-window").style.display = "block";
 }
@@ -349,6 +352,65 @@ function importAndExport()
 }
 
 
+async function importCSV()
+{
+  function sanitizeCSVData(csvData)
+  {
+    let rv = "";
+
+    if (! csvData) {
+      return rv;
+    }
+    if (csvData.startsWith('"')) {
+      csvData = csvData.substring(1);
+    }
+    if (csvData.endsWith('"')) {
+      csvData = csvData.substring(0, csvData.length - 1);
+    }
+    
+    rv = DOMPurify.sanitize(csvData);
+
+    return rv;
+  }
+  
+  let inputFileElt = $("import-file-picker");
+  if (inputFileElt.files.length == 0) {
+    messenger.aecreations.alert("Snippets", "Select a file to import.");
+    return;
+  }
+
+  let db = gSnippets.getSnippetsDB();
+  let seq = await db.snippets.count();
+
+  let importFile = inputFileElt.files[0];
+
+  if (importFile.type == "text/csv") {
+    Papa.parse(importFile, {
+      async complete(results) {
+        let importedRows = [];
+        
+        results.data.forEach(row => {
+          let newSnippet = {
+            name: sanitizeCSVData(row[0]),
+            content: sanitizeCSVData(row[1]),
+            displayOrder: ++seq,
+          };
+
+          importedRows.push(db.snippets.add(newSnippet));
+        });
+
+        await Promise.all(importedRows);
+        initSnippetsList(true);
+        messenger.aecreations.alert("Snippets", "Import finished.");
+      }
+    });
+  }
+  else {
+    messenger.aecreations.alert("Snippets", "Can't import selected file.");
+  }
+}
+
+
 async function exportCSV()
 { 
   let db = gSnippets.getSnippetsDB();
@@ -380,11 +442,11 @@ function saveToFile(aBlobData, aFilename)
     if (aDownldItems && aDownldItems.length > 0) {
       let exportFilePath = aDownldItems[0].filename;
 
-      window.alert(`Snippets export to "${exportFilePath}" is successfully completed.`);
+      messenger.aecreations.alert("Snippets", `Snippets export to "${exportFilePath}" is successfully completed.`);
     }
   }).catch(aErr => {
+    // An exception would be thrown if the user cancelled the download.
     console.error(aErr);
-    window.alert("Export failed!\n" + aErr);
   });
 }
 
