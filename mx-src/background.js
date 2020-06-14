@@ -26,7 +26,7 @@ messenger.runtime.onInstalled.addListener(async (install) => {
 });
 
 messenger.runtime.onStartup.addListener(async () => {
-  gPrefs = await browser.storage.local.get();
+  gPrefs = await messenger.storage.local.get();
   init();
 });
 
@@ -92,6 +92,14 @@ async function init()
     }
   });
 
+  messenger.storage.onChanged.addListener((changes, areaName) => {
+    let changedPrefs = Object.keys(changes);
+
+    for (let pref of changedPrefs) {
+      gPrefs[pref] = changes[pref].newValue;
+    }
+  });
+
   log("Snippets: Initialization complete.");
 }
 
@@ -103,7 +111,7 @@ async function setDefaultPrefs()
   };
 
   gPrefs = aeSnippetsPrefs;
-  await browser.storage.local.set(aeSnippetsPrefs);
+  await messenger.storage.local.set(aeSnippetsPrefs);
 }
 
 
