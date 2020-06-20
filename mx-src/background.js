@@ -120,7 +120,7 @@ function openSnippetsWindow()
   let wndOpts = {
     url: "pages/snippets.html",
     type: "detached_panel",
-    width: 352, height: 420,
+    width: 388, height: 420,
     left: 64, top: 128
   };
   messenger.windows.create(wndOpts);
