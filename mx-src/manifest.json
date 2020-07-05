@@ -4,10 +4,10 @@
   "description": "__MSG_extDesc__",
   "version": "0.3+",
   "author": "AE Creations",
-  "applications": {
+  "browser_specific_settings": {
     "gecko": {
       "id": "snippets@aecreations.github.io",
-      "strict_min_version": "78.0b1"
+      "strict_min_version": "78.0b4"
     }
   },
 
