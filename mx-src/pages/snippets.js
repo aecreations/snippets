@@ -146,7 +146,7 @@ async function createSnippet()
 }
 
 
-async function insertSnippet()
+async function insertSnippet(closeWnd)
 {
   let snippetID = getSelectedSnippetID();
   if (snippetID == -1) {
@@ -161,12 +161,11 @@ async function insertSnippet()
     content: snippet.content,
   };
 
-  // BUG: This will throw an error if `msg.content` contains unescaped line breaks!
   await messenger.runtime.sendMessage(msg);
 
-  // Close the popup window.
-  // BUG - This doesn't work (the value of the window ID is always -1)
-  //messenger.windows.remove(messenger.windows.WINDOW_ID_CURRENT);
+  if (closeWnd) {
+    messenger.windows.remove(messenger.windows.WINDOW_ID_CURRENT);
+  }
 }
 
 
