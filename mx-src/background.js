@@ -59,21 +59,8 @@ async function init()
 
   messenger.runtime.onMessage.addListener(async (msg) => {
     if (msg.id == "insert-snippet") {
-      let htmlPasteMode = gPrefs.htmlPasteMode;
-
-      let comp = await messenger.compose.getComposeDetails(gComposeTabID);
       log(`Snippets: Handling message "${msg.id}".  Compose window tab ID: ${gComposeTabID}`);
-
-      let content = DOMPurify.sanitize(msg.content);
-      content = content.replace(/\\/g, "\\\\");
-      content = content.replace(/\"/g, "\\\"");
-      content = content.replace(/\n/g, "\\n");
-      
-      let injectOpts = {
-        code: `insertSnippet("${content}", ${comp.isPlainText}, ${htmlPasteMode});`
-      };
-        
-      messenger.tabs.executeScript(gComposeTabID, injectOpts);
+      insertSnippet({ content: msg.content });
     }
   });
 
@@ -112,6 +99,38 @@ async function setDefaultPrefs()
 
   gPrefs = aeSnippetsPrefs;
   await messenger.storage.local.set(aeSnippetsPrefs);
+}
+
+
+async function insertSnippet(snippet)
+{
+  let htmlPasteMode = gPrefs.htmlPasteMode;
+
+  let comp = await messenger.compose.getComposeDetails(gComposeTabID);
+  let content = DOMPurify.sanitize(snippet.content);
+  content = content.replace(/\\/g, "\\\\");
+  content = content.replace(/\"/g, "\\\"");
+  content = content.replace(/\n/g, "\\n");
+
+  content = processPlaceholders(content);
+  
+  let injectOpts = {
+    code: `insertSnippet("${content}", ${comp.isPlainText}, ${htmlPasteMode});`
+  };
+  
+  messenger.tabs.executeScript(gComposeTabID, injectOpts); 
+}
+
+
+function processPlaceholders(snippetText)
+{
+  let rv = "";
+  let date = new Date();
+
+  rv = snippetText.replace(/\$\[DATE\]/gm, date.toLocaleDateString());
+  rv = rv.replace(/\$\[TIME\]/gm, date.toLocaleTimeString());
+
+  return rv;
 }
 
 
