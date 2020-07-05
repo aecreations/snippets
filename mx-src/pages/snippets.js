@@ -3,9 +3,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-
-const TIMEOUT_MS = 2500;
-
 let gSnippets;
 let gSortable;
 
@@ -66,7 +63,7 @@ async function init()
   document.querySelector("#rearrange-snippets > .dlg-buttons > .btn-cancel")
     .addEventListener("click", e => { cancelDndRearrange() });
 
-  document.querySelector("#import-export > #import > #import-csv")
+  document.querySelector("#import-export > #import > #import-row > #import-csv")
     .addEventListener("click", async (e) => { importCSV() });
   document.querySelector("#import-export > #export > #export-csv")
     .addEventListener("click", async (e) => { exportCSV() });
@@ -140,8 +137,7 @@ async function createSnippet()
   let newSnippetID = await db.snippets.add({name, content, displayOrder: numSnippets + 1});
   await initSnippetsList(true);
 
-  $("create-confirm").style.visibility = "visible";
-  window.setTimeout(() => {$("create-confirm").style.visibility = "hidden"}, TIMEOUT_MS);
+  showMsgBanner("create-confirm");
   $("new-snippet-content").value = "";
 }
 
@@ -374,7 +370,7 @@ async function importCSV()
   
   let inputFileElt = $("import-file-picker");
   if (inputFileElt.files.length == 0) {
-    messenger.aecreations.alert("Snippets", "Select a file to import.");
+    showMsgBanner("import-error-no-file");
     return;
   }
 
@@ -400,7 +396,7 @@ async function importCSV()
 
         await Promise.all(importedRows);
         initSnippetsList(true);
-        messenger.aecreations.alert("Snippets", "Import finished.");
+        showMsgBanner("import-success");
       }
     });
   }
@@ -447,6 +443,13 @@ function saveToFile(aBlobData, aFilename)
     // An exception would be thrown if the user cancelled the download.
     console.error(aErr);
   });
+}
+
+
+function showMsgBanner(msgBannerID)
+{
+  $(msgBannerID).style.display = "inline";
+  window.setTimeout(() => {$(msgBannerID).style.display = "none"}, 2500);
 }
 
 

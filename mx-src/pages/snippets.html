@@ -18,7 +18,7 @@
       <p>
 	<textarea id="new-snippet-content" placeholder="New snippet content" cols="32" rows="4"></textarea>
 	<button id="create">Create Snippet</button>
-	<span id="create-confirm">New snippet created</span>
+	<span id="create-confirm" class="confirm-msg">New snippet created</span>
       </p>
 
       <hr>
@@ -67,7 +67,11 @@
       <fieldset id="import">
         <legend>Import</legend>
         <input type="file" id="import-file-picker" accept="text/csv">
-        <button id="import-csv">Import CSV</button>
+        <div id="import-row" class="row">
+	  <button id="import-csv">Import CSV</button>
+	  <span id="import-error-no-file" class="error-msg">Select a file to import</span>
+	  <span id="import-success" class="confirm-msg">Import finished</span>
+        </div>
       </fieldset>
 
       <fieldset id="export">
