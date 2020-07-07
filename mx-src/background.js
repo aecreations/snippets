@@ -60,7 +60,11 @@ async function init()
   messenger.runtime.onMessage.addListener(async (msg) => {
     if (msg.id == "insert-snippet") {
       log(`Snippets: Handling message "${msg.id}".  Compose window tab ID: ${gComposeTabID}`);
-      insertSnippet({ content: msg.content });
+
+      let snippet = {
+        content: DOMPurify.sanitize(msg.content),
+      };
+      insertSnippet(snippet);
     }
   });
 
@@ -107,8 +111,7 @@ async function insertSnippet(snippet)
   let htmlPasteMode = gPrefs.htmlPasteMode;
 
   let comp = await messenger.compose.getComposeDetails(gComposeTabID);
-  let content = DOMPurify.sanitize(snippet.content);
-  content = content.replace(/\\/g, "\\\\");
+  let content = snippet.content.replace(/\\/g, "\\\\");
   content = content.replace(/\"/g, "\\\"");
   content = content.replace(/\n/g, "\\n");
 
