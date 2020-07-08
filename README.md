@@ -10,6 +10,7 @@ Requires Thunderbird 78 beta 4 or newer, available from the [Thunderbird website
 - Snippets popup window from where you can create, edit, delete and rearrange snippets, as well as select a snippet to insert into a message. To open it, click the Snippets icon in the message composer toolbar
 - Create a snippet from selected text in the message composer
 - Insert a snippet as rich text if it contains HTML tags
+- Placeholders for date and time
 - Import/export snippets to/from a CSV file
 
 ### Things You Should Know About
@@ -36,7 +37,6 @@ The user interface is very minimal and rather awkward to use, due to missing cap
 
 - Keyboard shortcut in the message composer to display the Snippets popup window
 - [DONE] ~~Extension pref UI for HTML insert mode (as rich text, or with HTML tags)~~
-- Placeholders for date, time, and snippet name
 - Detect Clippings JSON file in a user-specified folder location (read the Clippings user pref `extensions.aecreations.clippings.datasource.location` and check for non-empty folder path)
 - Move all UI strings into messages.json
 - Show all snippets in a Snippets context menu in the message composer
