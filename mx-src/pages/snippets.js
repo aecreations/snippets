@@ -412,11 +412,13 @@ async function exportCSV()
   let expData = [];
 
   await db.snippets.each(snippet => {
-    let content = snippet.content.replace(/\"/g, '""');
-    expData.push(`"${snippet.name}","${content}"`);
+    expData.push([ snippet.name, snippet.content ]);
   });
 
-  let csvData = expData.join("\r\n");
+  let cfgOpts = {
+    quotes: true,
+  };
+  let csvData = Papa.unparse(expData, cfgOpts);
   let blobData = new Blob([csvData], { type: "text/csv;charset=utf-8" });
   
   saveToFile(blobData, aeConst.CSV_EXPORT_FILENAME);
