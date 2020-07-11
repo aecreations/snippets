@@ -3,7 +3,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-
 let gSnippetsDB;
 let gPrefs;
 let gComposeTabID;
@@ -157,7 +156,6 @@ async function detectLegacyClippings()
     return null;
   }
 
-  // TO DO: Search in the data source folder location which may be set by the user.
   let fileData = await messenger.aecreations.detectClippingsJSONFile();
   if (fileData) {
     let clippings = JSON.parse(fileData);

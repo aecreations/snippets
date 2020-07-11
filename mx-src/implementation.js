@@ -43,10 +43,17 @@ var aecreations = class extends ExtensionCommon.ExtensionAPI {
 
 	async detectClippingsJSONFile()
 	{
-	  let dirProp = Services.dirsvc;
-	  let profileDir = dirProp.get("ProfD", Components.interfaces.nsIFile);
-	  let path = profileDir.path;
-	  let jsonFilePath = `${path}/${this.CLIPPINGS_JSON_FILENAME}`;
+          let jsonFilePath = await this.getPref("extensions.aecreations.clippings.datasource.location");
+          if (jsonFilePath) {
+            jsonFilePath = OS.Path.join(jsonFilePath, this.CLIPPINGS_JSON_FILENAME);
+          }
+          else {
+            let dirProp = Services.dirsvc;
+	    let profileDir = dirProp.get("ProfD", Components.interfaces.nsIFile);
+	    let path = profileDir.path;
+            jsonFilePath = OS.Path.join(path, this.CLIPPINGS_JSON_FILENAME);
+          }
+
 	  this._log("aecreations.detectClippingsJSONFile(): Clippings JSON file path: " + jsonFilePath);
 	  
 	  let fileData;
