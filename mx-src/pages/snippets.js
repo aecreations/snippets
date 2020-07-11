@@ -379,7 +379,7 @@ async function importCSV()
 
   let importFile = inputFileElt.files[0];
 
-  if (importFile.type == "text/csv") {
+  if (importFile.type == "text/csv" || importFile.name.endsWith(".csv")) {
     Papa.parse(importFile, {
       async complete(results) {
         let importedRows = [];
