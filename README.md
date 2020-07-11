@@ -15,7 +15,7 @@ Requires Thunderbird 78 beta 4 or newer, available from the [Thunderbird website
 
 ### Things You Should Know About
 
-On first run, Snippets will detect if there is a Clippings backup JSON data file (clippings.json) in the Thunderbird user profile folder.  It currently won't do anything with it other than report basic file properties to the debugging console.
+On first run, Snippets will detect if there is a Clippings backup JSON data file (clippings.json) in the Clippings data folder (by default, this is the Thunderbird profile folder).  It doesn't do anything with it other than report basic file properties to the debugging console.
 
 ### Known Issues
 
