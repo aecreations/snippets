@@ -38,7 +38,7 @@ The user interface is very minimal and rather awkward to use, due to missing cap
 - Keyboard shortcut in the message composer to display the Snippets popup window
 - [DONE] ~~Extension pref UI for HTML insert mode (as rich text, or with HTML tags)~~
 - [DONE] ~~Detect Clippings JSON file in a user-specified folder location (read the Clippings user pref `extensions.aecreations.clippings.datasource.location` and check for non-empty folder path)~~
-- Move all UI strings into messages.json
+- [DONE] ~~Move all UI strings into messages.json~~
 - Show all snippets in a Snippets context menu in the message composer
 - Replace generic extension icon
 - [DONE] ~~A better popup window, with the unnecessary browser navigation toolbar removed~~
