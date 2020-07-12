@@ -20,6 +20,8 @@ async function init()
 
   initSnippetsList();
 
+  $("new-snippet-content").placeholder = messenger.i18n.getMessage("newSnippetPlchldr");
+  
   $("get-selection").addEventListener("click", e => { getSelectedText() });
 
   $("create").addEventListener("click", async (e) => { createSnippet() });
@@ -146,7 +148,7 @@ async function insertSnippet(closeWnd)
 {
   let snippetID = getSelectedSnippetID();
   if (snippetID == -1) {
-    window.alert("Select a snippet.");
+    window.alert(messenger.i18n.getMessage("msgSelectSnip"));
     return;
   }
   
@@ -401,7 +403,7 @@ async function importCSV()
     });
   }
   else {
-    messenger.aecreations.alert("Snippets", "Can't import selected file.");
+    messenger.aecreations.alert(messenger.i18n.getMessage("extName"), messenger.i18n.getMessage("msgCantImp"));
   }
 }
 
@@ -439,7 +441,7 @@ function saveToFile(aBlobData, aFilename)
     if (aDownldItems && aDownldItems.length > 0) {
       let exportFilePath = aDownldItems[0].filename;
 
-      messenger.aecreations.alert("Snippets", `Snippets export to "${exportFilePath}" is successfully completed.`);
+      messenger.aecreations.alert(messenger.i18n.getMessage("extName"), messenger.i18n.getMessage("msgExpFinish", exportFilePath));
     }
   }).catch(aErr => {
     // An exception would be thrown if the user cancelled the download.

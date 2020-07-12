@@ -7,5 +7,123 @@
   "extDesc": {
     "message": "Save snippets of text for pasting into messages. A demo MailExtension for Thunderbird.",
     "description": "Description of the extension"
+  },
+
+  "btnOK": {
+    "message": "ok"
+  },
+
+  "btnCancel": {
+    "message": "cancel"
+  },
+
+  "btnClose": {
+    "message": "close"
+  },
+
+  "btnDone": {
+    "message": "done"
+  },
+  
+  "btnGetSelcxn": {
+    "message": "get selection"
+  },
+
+  "newSnippetPlchldr": {
+    "message": "new snippet content"
+  },
+
+  "btnCreate": {
+    "message": "create snippet"
+  },
+
+  "msgCreatedConf": {
+    "message": "new snippet created"
+  },
+
+  "btnInsert": {
+    "message": "insert"
+  },
+
+  "btnEdit": {
+    "message": "edit..."
+  },
+
+  "btnRearrange": {
+    "message": "rearrange..."
+  },
+
+  "btnDelete": {
+    "message": "delete"
+  },
+
+  "btnImpExp": {
+    "message": "import & export..."
+  },
+
+  "editSnip": {
+    "message": "edit snippet"
+  },
+
+  "cbUpdName": {
+    "message": "update name"
+  },
+
+  "arrangeDesc": {
+    "message": "arrange snippets using drag and drop"
+  },
+
+  "gbImport": {
+    "message": "import"
+  },
+
+  "gbExport": {
+    "message": "export"
+  },
+
+  "btnImpCSV": {
+    "message": "import csv"
+  },
+
+  "btnExpCSV": {
+    "message": "export csv"
+  },
+
+  "msgSelectFile": {
+    "message": "select a file to import"
+  },
+
+  "msgImpFinish": {
+    "message": "import finished"
+  },
+
+  "msgSelectSnip": {
+    "message": "Select a snippet."
+  },
+
+  "msgCantImp": {
+    "message": "Can't import selected file."
+  },
+
+  "msgExpFinish": {
+    "message": "Snippets export to \"$exportFilePath$\" is successfully completed.",
+    "placeholders": {
+      "exportFilePath": {
+	"content": "$1",
+	"example": "export.csv"
+      }
+    }
+  },
+
+  "labelPasteOptions": {
+    "message": "html paste mode:"
+  },
+
+  "pasteOptFormatted": {
+    "message": "paste as formatted text"
+  },
+
+  "pasteOptRawHTML": {
+    "message": "paste as plain text, preserving HTML tags"
   }
 }

@@ -6,82 +6,82 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Snippets</title>
+    <title data-i18n="extName"></title>
 
     <link rel="stylesheet" href="snippets.css">
   </head>
 
   <body>
     <div id="main-window">
-      <p><button id="get-selection">Get Selection</button></p>
+      <p><button id="get-selection" data-i18n="btnGetSelcxn"></button></p>
 
       <p>
-	<textarea id="new-snippet-content" placeholder="New snippet content" cols="32" rows="4"></textarea>
-	<button id="create">Create Snippet</button>
-	<span id="create-confirm" class="confirm-msg">New snippet created</span>
+	<textarea id="new-snippet-content" cols="32" rows="4"></textarea>
+	<button id="create" data-i18n="btnCreate"></button>
+	<span id="create-confirm" class="confirm-msg" data-i18n="msgCreatedConf"></span>
       </p>
 
       <hr>
 
       <div id="snippets-list-sxs">
 	<div id="manage-actions">
-          <button id="edit-snippet">Edit...</button>
-	  <button id="dnd-rearrange">Rearrange...</button>
-	  <button id="delete">Delete</button>
-          <button id="import-and-export">Import & Export...</button>
+          <button id="edit-snippet" data-i18n="btnEdit"></button>
+	  <button id="dnd-rearrange" data-i18n="btnRearrange"></button>
+	  <button id="delete" data-i18n="btnDelete"></button>
+          <button id="import-and-export" data-i18n="btnImpExp"></button>
 	</div>
 	<p>
 	  <select id="snippets-list" size="8"></select>
-	  <button id="insert-snippet">Insert</button>
-	  <button id="close-window" style="float:right">Close Window</button>
+	  <button id="insert-snippet" data-i18n="btnInsert"></button>
+	  <button id="close-window" style="float:right" data-i18n="btnClose"></button>
 	</p>
       </div>
     </div> <!-- /main -->
 
     <div id="edit">
-      <p>Edit snippet</p>
+      <p data-i18n="editSnip"></p>
 
       <div id="snippet-editor-content">
         <textarea id="snippet-editor" cols="48" rows="16"></textarea>
       </div>
 
       <div class="dlg-buttons">
-	<input type="checkbox" id="edit-snippet-name"><label for="edit-snippet-name">Update name</label>
-        <button class="btn-accept">OK</button>
-        <button class="btn-cancel">Cancel</button>
+	<input type="checkbox" id="edit-snippet-name"><label for="edit-snippet-name" data-i18n="cbUpdName"></label>
+        <button class="btn-accept" data-i18n="btnOK"></button>
+        <button class="btn-cancel" data-i18n="btnCancel"></button>
       </div>
     </div> <!-- /edit -->
 
     <div id="rearrange-snippets">
-      <p class="instructions">Arrange snippets using drag and drop.</p>
+      <p class="instructions" data-i18n="arrangeDesc"></p>
 
       <div id="snippets-sortable-list"></div>
 
       <div class="dlg-buttons">
-        <button class="btn-accept">OK</button>
-        <button class="btn-cancel">Cancel</button>
+        <button class="btn-accept" data-i18n="btnOK"></button>
+        <button class="btn-cancel" data-i18n="btnCancel"></button>
       </div>
     </div> <!-- /rearrange-snippets -->
 
     <div id="import-export">
       <fieldset id="import">
-        <legend>Import</legend>
+        <legend data-i18n="gbImport"></legend>
         <input type="file" id="import-file-picker" accept="text/csv">
         <div id="import-row" class="row">
-	  <button id="import-csv">Import CSV</button>
-	  <span id="import-error-no-file" class="error-msg">Select a file to import</span>
-	  <span id="import-success" class="confirm-msg">Import finished</span>
+	  <button id="import-csv" data-i18n="btnImpCSV"></button>
+	  <span id="import-error-no-file" class="error-msg" data-i18n="msgSelectFile"></span>
+	  <span id="import-success" class="confirm-msg" data-i18n="msgImpFinish"></span>
         </div>
       </fieldset>
 
       <fieldset id="export">
-        <legend>Export</legend>
+        <legend data-i18n="gbExport"></legend>
 
-        <button id="export-csv">Export CSV</button>
+        <button id="export-csv" data-i18n="btnExpCSV"></button>
       </fieldset>
       
       <div class="dlg-buttons">
-        <button class="btn-close">Done</button>
+        <button class="btn-close" data-i18n="btnDone"></button>
       </div>
     </div> <!-- /import-export -->
 
@@ -89,6 +89,7 @@
     <script src="../lib/Sortable.js"></script>
     <script src="../lib/papaparse.min.js"></script>
     <script src="../modules/aeConst.js"></script>
+    <script src="../modules/aeI18n.js"></script>
     <script src="snippets.js"></script>
   </body>
 </html>

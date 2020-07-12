@@ -29,7 +29,7 @@
   },
 
   "compose_action": {
-    "default_title": "Snippets",
+    "default_title": "__MSG_extName__",
     "default_area": "maintoolbar"
   },
 

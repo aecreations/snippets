@@ -6,16 +6,16 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Snippets Options</title>
   </head>
 
   <body>
-    <label>html paste mode:</label>
+    <label data-i18n="labelPasteOptions"></label>
     <select id="html-paste-mode">
-      <option value="1">paste as formatted text</option>
-      <option value="2">paste as plain text, preserving HTML tags</option>
+      <option value="1" data-i18n="pasteOptFormatted"></option>
+      <option value="2" data-i18n="pasteOptRawHTML"></option>
     </select>
 
+    <script src="../modules/aeI18n.js"></script>
     <script src="options.js"></script>
   </body>
 </html>
