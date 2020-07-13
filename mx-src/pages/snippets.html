@@ -5,23 +5,27 @@
 
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8"/>
     <title data-i18n="extName"></title>
 
-    <link rel="stylesheet" href="snippets.css">
+    <link rel="stylesheet" href="snippets.css"/>
   </head>
 
   <body>
     <div id="main-window">
-      <p><button id="get-selection" data-i18n="btnGetSelcxn"></button></p>
+      <div id="create-snippet-sxs">
+	<div id="create-actions">
+	  <button id="get-selection" data-i18n="btnGetSelcxn"></button>
+        </div>
+	<p>
+	  <label for="new-snippet-content" data-i18n="labelNewSnip"></label>
+	  <textarea id="new-snippet-content" cols="28" rows="6"></textarea>
+	  <button id="create" data-i18n="btnCreate"></button>
+	  <span id="create-confirm" class="confirm-msg" data-i18n="msgCreatedConf"></span>
+	</p>
+      </div>
 
-      <p>
-	<textarea id="new-snippet-content" cols="32" rows="4"></textarea>
-	<button id="create" data-i18n="btnCreate"></button>
-	<span id="create-confirm" class="confirm-msg" data-i18n="msgCreatedConf"></span>
-      </p>
-
-      <hr>
+      <hr/>
 
       <div id="snippets-list-sxs">
 	<div id="manage-actions">
@@ -31,10 +35,13 @@
           <button id="import-and-export" data-i18n="btnImpExp"></button>
 	</div>
 	<p>
+          <label for="snippets-list" data-i18n="labelInsSnip"></label>
 	  <select id="snippets-list" size="8"></select>
-	  <button id="insert-snippet" data-i18n="btnInsert"></button>
-	  <button id="close-window" style="float:right" data-i18n="btnClose"></button>
 	</p>
+        <div class="dlg-buttons">
+	  <button id="insert-snippet" class="default "data-i18n="btnInsert"></button>
+	  <button id="close-window" data-i18n="btnClose"></button>
+        </div>
       </div>
     </div> <!-- /main -->
 
@@ -42,11 +49,13 @@
       <p data-i18n="editSnip"></p>
 
       <div id="snippet-editor-content">
-        <textarea id="snippet-editor" cols="48" rows="16"></textarea>
+        <textarea id="snippet-editor"></textarea>
       </div>
 
       <div class="dlg-buttons">
-	<input type="checkbox" id="edit-snippet-name"><label for="edit-snippet-name" data-i18n="cbUpdName"></label>
+        <div id="editor-opts">
+          <input type="checkbox" id="edit-snippet-name"><label for="edit-snippet-name" data-i18n="cbUpdName"></label>
+        </div>
         <button class="btn-accept" data-i18n="btnOK"></button>
         <button class="btn-cancel" data-i18n="btnCancel"></button>
       </div>

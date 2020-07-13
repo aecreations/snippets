@@ -25,6 +25,10 @@
     "message": "done"
   },
   
+  "labelNewSnip": {
+    "message": "create new snippet"
+  },
+  
   "btnGetSelcxn": {
     "message": "get selection"
   },
@@ -39,6 +43,10 @@
 
   "msgCreatedConf": {
     "message": "new snippet created"
+  },
+
+  "labelInsSnip": {
+    "message": "insert snippet"
   },
 
   "btnInsert": {
@@ -116,7 +124,7 @@
   },
 
   "labelPasteOptions": {
-    "message": "html paste mode:"
+    "message": "when pasting an HTML-formatted snippet into a rich text edit box:"
   },
 
   "pasteOptFormatted": {

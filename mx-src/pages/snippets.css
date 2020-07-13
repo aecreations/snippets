@@ -2,10 +2,21 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-body,
+body {
+    margin: 16px;
+    overflow: hidden;
+    font-size: 13px;
+}
+
 button,
-select > option {
+select > option,
+textarea {
     font-size: 12px;
+}
+
+button {
+    min-width: 88px;
+    height: 22px;
 }
 
 .confirm-msg {
@@ -16,16 +27,22 @@ select > option {
     color: red;
 }
 
+.dlg-buttons {
+    position: absolute;
+    right: 18px;
+    bottom: 18px;
+}
+
 #edit,
 #rearrange-snippets,
 #import-export {
   display: none;
 }
 
-#new-snippet-content,
-#snippets-list {
-    display: block;
-    margin-bottom: 8px;
+#edit button,
+#rearrange-snippets button,
+#import-export button {
+    min-width: 72px;
 }
 
 #create-confirm,
@@ -34,21 +51,62 @@ select > option {
     display: none;
 }
 
-#snippets-list {
-    width: 220px;
+#main-window #new-snippet-content,
+#main-window #snippets-list {
+    display: block;
+    width: 230px;
+    margin-top: 4px;
+    margin-bottom: 8px;
 }
 
-#manage-actions {
+#main-window #snippets-list {
+    height: 120px;
+}
+
+#main-window #create-actions,
+#main-window #manage-actions {
     float: right;
+    margin-top: 18px;
 }
 
-#manage-actions > button {
+#main-window #create-actions > button,
+#main-window #manage-actions > button {
     display: block;
     margin-bottom: 8px;
+    min-width: 120px;
+    text-align: left;
+}
+
+#main-window .dlg-buttons {
+    position: unset;
+    right: unset;
+    bottom: unset;
+    text-align: right;
+}
+
+#main-window .dlg-buttons > #insert-snippet {
+    float: left;
+}
+
+#edit #snippet-editor {
+    width: 360px;
+    height: 290px;
+}
+
+#edit #editor-opts {
+    float: left;
+}
+
+#edit > .dlg-buttons {
+    position: unset;
+    right: unset;
+    bottom: unset;
+    text-align: right;
 }
 
 #edit-snippet-name + label {
     margin-right: 16px;
+    vertical-align: 2px;
 }
 
 #snippet-editor-content,
@@ -58,9 +116,9 @@ select > option {
 
 #snippets-sortable-list {
     width:  100%;
-    max-width: 22em;
-    min-height: 220px;
-    max-height: 220px;
+    max-width: 366px;
+    min-height: 290px;
+    max-height: 290px;
     overflow-y: auto;
     border: 1px solid ThreeDShadow;
     background-color: #ddd;
@@ -71,11 +129,11 @@ select > option {
     padding: 3px 3px 3px 18px;
     border: 1px solid #bbb;
     background-color: #eee;
-/*    background-image: url("chrome://clippings/skin/images/grippy.svg");*/
+    background-image: url("../img/grippy.svg");
     background-position: left;
     background-size: contain;
     background-repeat: no-repeat;
-    font-size: 11.5px;
+    font-size: 13px;
 }
 
 #snippets-sortable-list > div:hover {
@@ -99,10 +157,15 @@ select > option {
 #import-export > #import > #import-row > #import-csv {
   margin-top: 8px;
   margin-bottom: 8px;
+  min-width: 108px;
 }
 
 #import-export > #export {
-  margin-bottom: 12px;
+    margin-bottom: 12px;
+}
+
+#import-export > #export > #export-csv {
+  min-width: 108px;
 }
 
 #import-export > #export > button {
