@@ -15,3 +15,11 @@ select,
 select > option {
     font-size: 12px;
 }
+
+input[type="checkbox"] + label {
+    vertical-align: 2px;
+}
+
+#html-paste-mode {
+    margin-bottom: 10px;
+}

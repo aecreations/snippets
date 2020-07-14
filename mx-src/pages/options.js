@@ -13,12 +13,19 @@ function $(eltID)
 async function init()
 {
   let prefs = await messenger.storage.local.get();
-  let htmlPasteModeSelectElt = $("html-paste-mode");
+  let htmlPasteModeSelect = $("html-paste-mode");
   
-  htmlPasteModeSelectElt.value = prefs.htmlPasteMode;
-  htmlPasteModeSelectElt.addEventListener("change", async (e) => {
+  htmlPasteModeSelect.value = prefs.htmlPasteMode;
+  htmlPasteModeSelect.addEventListener("change", async (e) => {
     messenger.storage.local.set({ htmlPasteMode: e.target.value });
   });
+
+  let checkSpell = $("check-spelling");
+  checkSpell.checked = prefs.checkSpelling;
+  checkSpell.addEventListener("click", async (e) => {
+    messenger.storage.local.set({ checkSpelling: e.target.checked });
+  });
+  
 }
 
 

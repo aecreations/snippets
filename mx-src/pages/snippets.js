@@ -17,10 +17,13 @@ async function init()
 {
   let bkgdWnd = await messenger.runtime.getBackgroundPage();
   gSnippets = bkgdWnd;
+  let prefs = gSnippets.getPrefs();
 
   initSnippetsList();
 
-  $("new-snippet-content").placeholder = messenger.i18n.getMessage("newSnippetPlchldr");
+  let newSnippetEditor = $("new-snippet-content");
+  newSnippetEditor.placeholder = messenger.i18n.getMessage("newSnippetPlchldr");
+  newSnippetEditor.setAttribute("spellcheck", prefs.checkSpelling);
   
   $("get-selection").addEventListener("click", e => { getSelectedText() });
 
@@ -202,7 +205,11 @@ async function editSnippet()
 
 function initEditDialog(snippet)
 {
-  $("snippet-editor").value = snippet.content;
+  let prefs = gSnippets.getPrefs();
+  let snippetEditor = $("snippet-editor");
+  
+  snippetEditor.value = snippet.content;
+  snippetEditor.setAttribute("spellcheck", prefs.checkSpelling);
 }
 
 

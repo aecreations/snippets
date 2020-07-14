@@ -98,6 +98,7 @@ async function setDefaultPrefs()
 {
   let aeSnippetsPrefs = {
     htmlPasteMode: aeConst.HTMLPASTE_AS_FORMATTED,
+    checkSpelling: true,
   };
 
   gPrefs = aeSnippetsPrefs;
@@ -170,6 +171,12 @@ async function detectLegacyClippings()
 function getSnippetsDB()
 {
   return gSnippetsDB;
+}
+
+
+function getPrefs()
+{
+  return gPrefs;
 }
 
 

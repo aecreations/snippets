@@ -133,5 +133,9 @@
 
   "pasteOptRawHTML": {
     "message": "paste as plain text, preserving HTML tags"
+  },
+  
+  "cbCheckSpelling": {
+    "message": "check spelling"
   }
 }
