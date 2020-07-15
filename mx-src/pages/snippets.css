@@ -33,6 +33,10 @@ button {
     bottom: 18px;
 }
 
+.dlg-buttons > button {
+    margin-left: 8px;
+}
+
 #edit,
 #rearrange-snippets,
 #import-export {
@@ -66,7 +70,7 @@ button {
 #main-window #create-actions,
 #main-window #manage-actions {
     float: right;
-    margin-top: 18px;
+    margin-top: 20px;
 }
 
 #main-window #create-actions > button,
@@ -86,6 +90,7 @@ button {
 
 #main-window .dlg-buttons > #insert-snippet {
     float: left;
+    margin-left: 0;
 }
 
 #edit #snippet-editor {
