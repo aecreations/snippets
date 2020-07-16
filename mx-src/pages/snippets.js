@@ -40,7 +40,7 @@ async function init()
   $("import-and-export").addEventListener("click", e => { importAndExport() });
 
   $("close-window").addEventListener("click", e => {
-    messenger.windows.remove(messenger.windows.WINDOW_ID_CURRENT);
+    closeWnd();
   });
 
   let sortableList = $("snippets-sortable-list");
@@ -84,6 +84,50 @@ async function init()
       }
 
       $("new-snippet-content").value = DOMPurify.sanitize(msg.content);
+    }
+  });
+
+  document.addEventListener("keydown", async (e) => {
+    function isDlgVisible(dlgID)
+    {
+      return (document.getElementById(dlgID).style.display != "none");
+    }
+
+    function getVisibleDlgID()
+    {
+      let rv;
+      let dlgIDs = ["main-window", "edit", "rearrange-snippets", "import-export"];
+      for (let dlgID of dlgIDs) {
+        if (document.getElementById(dlgID).style.display != "none") {
+          rv = dlgID;
+          break;
+        }
+      }
+      return rv;
+    }
+    
+    if (e.key == "Enter") {
+      if (isDlgVisible("main-window") && e.target.id != "new-snippet-content") {
+        insertSnippet();
+      }
+      else if (isDlgVisible("edit") && e.target.id != "snippet-editor") {
+        document.querySelector(`#edit > .dlg-buttons > .btn-accept`).click();
+      }
+      else if (isDlgVisible("rearrange-snippets")) {
+        document.querySelector(`#rearrange-snippets > .dlg-buttons > .btn-accept`).click();
+      }
+    }
+    else if (e.key == "Escape") {
+      if (isDlgVisible("main-window")) {
+        closeWnd();
+      }
+      else if (isDlgVisible("edit") || isDlgVisible("rearrange-snippets")) {
+        let dlgID = getVisibleDlgID();
+        document.querySelector(`#${dlgID} > .dlg-buttons > .btn-cancel`).click();
+      }
+      else if (isDlgVisible("import-export")) {
+        document.querySelector(`#import-export > .dlg-buttons > .btn-close`).click();
+      }
     }
   });
 }
@@ -461,6 +505,12 @@ function showMsgBanner(msgBannerID)
 {
   $(msgBannerID).style.display = "inline";
   window.setTimeout(() => {$(msgBannerID).style.display = "none"}, 2500);
+}
+
+
+function closeWnd()
+{
+  messenger.windows.remove(messenger.windows.WINDOW_ID_CURRENT);
 }
 
 
