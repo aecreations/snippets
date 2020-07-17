@@ -55,6 +55,10 @@ button {
     display: none;
 }
 
+#main-window {
+    display: block;
+}
+
 #main-window #new-snippet-content,
 #main-window #snippets-list {
     display: block;
