@@ -51,6 +51,7 @@ button {
 
 #create-confirm,
 #import-error-no-file,
+#import-error-invalid,
 #import-success {
     display: none;
 }

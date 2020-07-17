@@ -454,7 +454,7 @@ async function importCSV()
     });
   }
   else {
-    messenger.aecreations.alert(messenger.i18n.getMessage("extName"), messenger.i18n.getMessage("msgCantImp"));
+    showMsgBanner("import-error-invalid");
   }
 }
 
