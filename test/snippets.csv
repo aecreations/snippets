@@ -1,0 +1,9 @@
+"Hello cruel world!","Hello, cruel world!"
+"<p>The <big>quick</big> </p>","<p>The <big>quick</big> <strong style=""color:brown"">brown</strong> fox <sup>jumps</sup> <span style=""text-decoration:underline"">over</span> the <em>lazy</em> dog.</p>"
+"The quick brown fox jumps ove...","The quick brown fox jumps over the lazy dog."
+"Goodbye, cruel world!"" he ex...","Goodbye, cruel world!"" he exclaimed.
+Then he hurled himself off the cliff, plunging into the cold, rough sea below.
+
+""Nooooo!"" he screamed, wide awake in his bed and drenched in sweat, as he realized that he had just awakened from a bad dream."
+"Date and Time Placeholders","Date and Time Placeholders
+Today's date is $[DATE], and the current time is $[TIME]."
