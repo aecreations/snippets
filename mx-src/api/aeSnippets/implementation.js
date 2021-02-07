@@ -8,10 +8,10 @@ var { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
 var { OS } = ChromeUtils.import("resource://gre/modules/osfile.jsm");
 
 
-var aecreations = class extends ExtensionCommon.ExtensionAPI {
+var aeSnippets = class extends ExtensionCommon.ExtensionAPI {
   getAPI(context) {
     return {
-      aecreations: {
+      aeSnippets: {
 	DEBUG: true,
 	CLIPPINGS_JSON_FILENAME: "clippings.json",
 
@@ -26,7 +26,7 @@ var aecreations = class extends ExtensionCommon.ExtensionAPI {
 	  let prefType = prefs.getPrefType(prefName);
 	  let rv = undefined;
 
-	  this._log(`aecreations.getPref(): Retrieving value of pref "${prefName}"`);
+	  this._log(`aeSnippets.getPref(): Retrieving value of pref "${prefName}"`);
 
 	  if (prefType == prefs.PREF_STRING) {
 	    rv = prefs.getCharPref(prefName);
@@ -54,14 +54,14 @@ var aecreations = class extends ExtensionCommon.ExtensionAPI {
             jsonFilePath = OS.Path.join(path, this.CLIPPINGS_JSON_FILENAME);
           }
 
-	  this._log("aecreations.detectClippingsJSONFile(): Clippings JSON file path: " + jsonFilePath);
+	  this._log("aeSnippets.detectClippingsJSONFile(): Clippings JSON file path: " + jsonFilePath);
 	  
 	  let fileData;
 	  try {
 	    fileData = await OS.File.read(jsonFilePath, { encoding: "utf-8" });
 	  }
 	  catch (e) {
-	    this._log("aecreations.detectClippingsJSONFile(): Error attempting to read file " + this.CLIPPINGS_JSON_FILENAME + ": " + e);
+	    this._log("aeSnippets.detectClippingsJSONFile(): Error attempting to read file " + this.CLIPPINGS_JSON_FILENAME + ": " + e);
 	    return false; 
 	  }
 

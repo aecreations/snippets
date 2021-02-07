@@ -1,6 +1,6 @@
 [
   {
-    "namespace": "aecreations",
+    "namespace": "aeSnippets",
     "functions": [
       {
 	"name": "alert",

@@ -492,7 +492,7 @@ function saveToFile(aBlobData, aFilename)
     if (aDownldItems && aDownldItems.length > 0) {
       let exportFilePath = aDownldItems[0].filename;
 
-      messenger.aecreations.alert(messenger.i18n.getMessage("extName"), messenger.i18n.getMessage("msgExpFinish", exportFilePath));
+      messenger.aeSnippets.alert(messenger.i18n.getMessage("extName"), messenger.i18n.getMessage("msgExpFinish", exportFilePath));
     }
   }).catch(aErr => {
     // An exception would be thrown if the user cancelled the download.

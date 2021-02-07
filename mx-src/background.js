@@ -96,13 +96,13 @@ async function init()
 
 async function setDefaultPrefs()
 {
-  let aeSnippetsPrefs = {
+  let defaultPrefs = {
     htmlPasteMode: aeConst.HTMLPASTE_AS_FORMATTED,
     checkSpelling: true,
   };
 
-  gPrefs = aeSnippetsPrefs;
-  await messenger.storage.local.set(aeSnippetsPrefs);
+  gPrefs = defaultPrefs;
+  await messenger.storage.local.set(defaultPrefs);
 }
 
 
@@ -151,13 +151,13 @@ function openSnippetsWindow()
 
 async function detectLegacyClippings()
 {
-  let prefVal = await messenger.aecreations.getPref("extensions.aecreations.clippings.first_run");
+  let prefVal = await messenger.aeSnippets.getPref("extensions.aecreations.clippings.first_run");
   if (prefVal === undefined) {
     log("It doesn't appear that Clippings 5.7 or older was installed.");
     return null;
   }
 
-  let fileData = await messenger.aecreations.detectClippingsJSONFile();
+  let fileData = await messenger.aeSnippets.detectClippingsJSONFile();
   if (fileData) {
     let clippings = JSON.parse(fileData);
     log(`Found the Clippings JSON file\nVersion: ${clippings.version}\nCreated by: ${clippings.createdBy}`);
