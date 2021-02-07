@@ -23,7 +23,7 @@
     "scripts": [
       "lib/dexie.min.js",
       "lib/purify.min.js",
-      "modules/aeConst.js",
+      "scripts/aeConst.js",
       "background.js"
     ]
   },
