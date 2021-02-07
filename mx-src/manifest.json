@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "__MSG_extName__",
   "description": "__MSG_extDesc__",
-  "version": "0.4",
+  "version": "0.4+",
   "author": "AE Creations",
   "browser_specific_settings": {
     "gecko": {
@@ -48,18 +48,18 @@
   },
   
   "experiment_apis": {
-    "aecreations": {
-      "schema": "schema.json",
+    "aeSnippets": {
+      "schema": "api/aeSnippets/schema.json",
       "parent": {
         "scopes": [
           "addon_parent"
         ],
         "paths": [
           [
-            "aecreations"
+            "aeSnippets"
           ]
         ],
-        "script": "implementation.js"
+        "script": "api/aeSnippets/implementation.js"
       }
     }
   },
