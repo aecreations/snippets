@@ -56,42 +56,49 @@ async function init()
   };  
   messenger.composeScripts.register(compScriptOpts);
 
-  messenger.runtime.onMessage.addListener(async (msg) => {
-    if (msg.id == "insert-snippet") {
-      log(`Snippets: Handling message "${msg.id}".  Compose window tab ID: ${gComposeTabID}`);
-
-      let snippet = {
-        content: DOMPurify.sanitize(msg.content),
-      };
-      insertSnippet(snippet);
-    }
-  });
-
-  // Applicable if no popup defined for composeAction.
-  messenger.composeAction.onClicked.addListener(tab => {
-    log(`Snippets: composeAction triggered. Active tab ID: ${tab.id}`);
-    gComposeTabID = tab.id;
-    openSnippetsWindow();
-  });
-
-  messenger.commands.onCommand.addListener(async (cmdName) => {
-    if (cmdName == "ae-snippets-window") {
-      let tabs = await messenger.tabs.query({ active: true, currentWindow: true });
-      let activeTabID = tabs[0].id;
-      log(`Snippets: Command "${cmdName}" triggered. Active tab ID: ${activeTabID} (NOT a compose tab!)`);
-    }
-  });
-
-  messenger.storage.onChanged.addListener((changes, areaName) => {
-    let changedPrefs = Object.keys(changes);
-
-    for (let pref of changedPrefs) {
-      gPrefs[pref] = changes[pref].newValue;
-    }
-  });
-
   log("Snippets: Initialization complete.");
 }
+
+
+//
+// Event handlers
+//
+
+messenger.runtime.onMessage.addListener(async (msg) => {
+  if (msg.id == "insert-snippet") {
+    log(`Snippets: Handling message "${msg.id}".  Compose window tab ID: ${gComposeTabID}`);
+
+    let snippet = {
+      content: DOMPurify.sanitize(msg.content),
+    };
+    insertSnippet(snippet);
+  }
+});
+
+// Applicable if no popup defined for composeAction.
+messenger.composeAction.onClicked.addListener(tab => {
+  log(`Snippets: composeAction triggered. Active tab ID: ${tab.id}`);
+  gComposeTabID = tab.id;
+  openSnippetsWindow();
+});
+
+
+messenger.commands.onCommand.addListener(async (cmdName) => {
+  if (cmdName == "ae-snippets-window") {
+    let tabs = await messenger.tabs.query({ active: true, currentWindow: true });
+    let activeTabID = tabs[0].id;
+    log(`Snippets: Command "${cmdName}" triggered. Active tab ID: ${activeTabID} (NOT a compose tab!)`);
+  }
+});
+
+
+messenger.storage.onChanged.addListener((changes, areaName) => {
+  let changedPrefs = Object.keys(changes);
+
+  for (let pref of changedPrefs) {
+    gPrefs[pref] = changes[pref].newValue;
+  }
+});
 
 
 async function setDefaultPrefs()
@@ -137,8 +144,16 @@ function processPlaceholders(snippetText)
 }
 
 
-function openSnippetsWindow()
+async function openSnippetsWindow()
 {
+  log("Snippets: Compose window tab ID: " + gComposeTabID);
+
+  let wndGeom = await messenger.tabs.executeScript(gComposeTabID, {
+    code: "`${window.outerWidth},${window.outerHeight},${window.screenX},${window.screenY}`;"
+  });
+  log("Snippets: Composer window geometry (w, h, x, y):");
+  log(wndGeom);
+  
   let wndOpts = {
     url: "pages/snippets.html",
     type: "detached_panel",
@@ -146,6 +161,26 @@ function openSnippetsWindow()
     left: 64, top: 128
   };
   messenger.windows.create(wndOpts);
+}
+
+
+async function getMostRecentHostAppWndID(wndType)
+{
+  // `wndType` is a string with possible values:
+  // - "normal" - main Thunderbird 3-pane messenger window
+  // - "messageCompose" - the message compose window
+  let rv = null;
+  let msgrTabs = await messenger.tabs.query({});
+
+  for (let tab of msgrTabs) {
+    let wnd = await messenger.windows.get(tab.windowId);
+    if (wnd.type == wndType && wnd.focused) {
+      rv = tab.windowId;
+      break;
+    }
+  }
+
+  return rv;
 }
 
 
