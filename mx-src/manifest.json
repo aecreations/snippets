@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "__MSG_extName__",
   "description": "__MSG_extDesc__",
-  "version": "0.4+",
+  "version": "1.0",
   "author": "AE Creations",
   "browser_specific_settings": {
     "gecko": {
@@ -44,7 +44,7 @@
 	"default": "Ctrl+Shift+S",
 	"mac": "Command+Shift+S"
       },
-      "description": "Snippets command"
+      "description": "__MSG_extName__"
     }
   },
   
