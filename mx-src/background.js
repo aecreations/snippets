@@ -51,7 +51,7 @@ async function init()
 
   let compScriptOpts = {
     js: [
-      { file: "compose.js" }
+      {file: "compose.js"}
     ],
   };  
   messenger.composeScripts.register(compScriptOpts);
@@ -85,9 +85,9 @@ messenger.composeAction.onClicked.addListener(tab => {
 
 messenger.commands.onCommand.addListener(async (cmdName) => {
   if (cmdName == "ae-snippets-window") {
-    let tabs = await messenger.tabs.query({ active: true, currentWindow: true });
-    let activeTabID = tabs[0].id;
-    log(`Snippets: Command "${cmdName}" triggered. Active tab ID: ${activeTabID} (NOT a compose tab!)`);
+    let [tab] = await messenger.tabs.query({active: true, currentWindow: true});
+    gComposeTabID = tab.id;
+    openSnippetsWindow();
   }
 });
 
@@ -146,17 +146,28 @@ function processPlaceholders(snippetText)
 
 async function openSnippetsWindow()
 {
-  log("Snippets: Compose window tab ID: " + gComposeTabID);
+  if (gComposeTabID) {
+    log("Snippets: Compose window tab ID: " + gComposeTabID);
 
-  let wndGeom = await messenger.tabs.executeScript(gComposeTabID, {
-    code: "`${window.outerWidth},${window.outerHeight},${window.screenX},${window.screenY}`;"
-  });
-  log("Snippets: Composer window geometry (w, h, x, y):");
-  log(wndGeom);
+    let compTab = await messenger.tabs.get(gComposeTabID);
+    let compWnd = await messenger.windows.get(compTab.windowId);
+    let wndGeom = {
+      w: compTab.width,
+      h: compTab.height,
+      x: compWnd.left,
+      y: compWnd.top
+    };
+
+    log("Snippets: Composer window geometry (w, h, x, y):");
+    log(wndGeom);
+  }
+  else {
+    warn("Snippets: gComposeTabID is not initialized!");
+  }
   
   let wndOpts = {
     url: "pages/snippets.html",
-    type: "detached_panel",
+    type: "popup",
     width: 408, height: 428,
     left: 64, top: 128
   };
