@@ -7,8 +7,12 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "snippets@aecreations.github.io",
-      "strict_min_version": "115.0"
+      "strict_min_version": "102.0"
     }
+  },
+
+  "icons": {
+    "32": "img/icon.png"
   },
 
   "permissions": [
