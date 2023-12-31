@@ -4,8 +4,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 
-let aeConst = {
-  DEBUG: true,
+const aeConst = Object.freeze({
+  DEBUG: false,
   MAX_NAME_LENGTH: 32,
 
   // Constants for HTML paste options
@@ -15,4 +15,4 @@ let aeConst = {
 
   // Import and export
   CSV_EXPORT_FILENAME: "snippets.csv",
-};
+});
