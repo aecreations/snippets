@@ -85,6 +85,9 @@ messenger.composeAction.onClicked.addListener(tab => {
 
 messenger.commands.onCommand.addListener(async (cmdName) => {
   if (cmdName == "ae-snippets-window") {
+    // In Thunderbird versions older than 102.0, the tab ID of the current tab
+    // at the time the command was executed may not necessarily be the one for
+    // the special "hidden" tab representing the compose window!
     let [tab] = await messenger.tabs.query({active: true, currentWindow: true});
     gComposeTabID = tab.id;
     openSnippetsWindow();
@@ -127,8 +130,8 @@ async function insertSnippet(snippet)
   let injectOpts = {
     code: `insertSnippet("${content}", ${comp.isPlainText}, ${htmlPasteMode});`
   };
-  
-  messenger.tabs.executeScript(gComposeTabID, injectOpts); 
+
+  messenger.tabs.executeScript(gComposeTabID, injectOpts);
 }
 
 
