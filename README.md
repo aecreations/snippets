@@ -4,7 +4,7 @@
 Snippets was created during the course of an investigation of
 Thunderbird [MailExtensions APIs](https://thunderbird-webextensions.readthedocs.io/en/latest/index.html) for reading and modifying message composer content, IndexedDB support, ability to add menu items to the message composer context menu, opening extension pages in popup windows, and using experimental APIs.  The goal is to use this knowledge to port [Clippings for Thunderbird](https://github.com/aecreations/clippings-tb) to a MailExtension.
 
-Requires Thunderbird 78 beta 4 or newer, available from the [Thunderbird website](https://www.thunderbird.net/).
+Requires Thunderbird 102.0 or newer, available from the [Thunderbird website](https://www.thunderbird.net/).
 
 ### Features
 
@@ -30,13 +30,3 @@ See the [list of issues](https://github.com/aecreations/snippets/issues) for an 
 4. Click the gear icon at the top-right corner and then select Install Add-on From File.
 5. Locate the downloaded XPI file and then click Open.
 6. Follow the prompts to finish the installation.
-
-### To Do
-
-- Keyboard shortcut in the message composer to display the Snippets popup window
-- [DONE] ~~Extension pref UI for HTML insert mode (as rich text, or with HTML tags)~~
-- [DONE] ~~Detect Clippings JSON file in a user-specified folder location (read the Clippings user pref `extensions.aecreations.clippings.datasource.location` and check for non-empty folder path)~~
-- [DONE] ~~Move all UI strings into messages.json~~
-- Show all snippets in a Snippets context menu in the message composer
-- Replace generic extension icon
-- [DONE] ~~A better popup window, with the unnecessary browser navigation toolbar removed~~
