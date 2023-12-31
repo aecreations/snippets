@@ -360,6 +360,11 @@ function closeImportAndExport()
 
 function deleteSnippet()
 {
+  let confirmDel = window.confirm("are you sure?");
+  if (! confirmDel) {
+    return;
+  }
+  
   let snippetID = getSelectedSnippetID();
 
   if (snippetID == 0 || snippetID == -1) {
