@@ -7,7 +7,7 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "snippets@aecreations.github.io",
-      "strict_min_version": "102.0"
+      "strict_min_version": "115.0"
     }
   },
 
@@ -52,22 +52,5 @@
     "page": "pages/options.html"
   },
   
-  "experiment_apis": {
-    "aeSnippets": {
-      "schema": "api/aeSnippets/schema.json",
-      "parent": {
-        "scopes": [
-          "addon_parent"
-        ],
-        "paths": [
-          [
-            "aeSnippets"
-          ]
-        ],
-        "script": "api/aeSnippets/implementation.js"
-      }
-    }
-  },
-
   "default_locale": "en"
 }

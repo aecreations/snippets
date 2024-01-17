@@ -13,7 +13,6 @@ messenger.runtime.onInstalled.addListener(async (install) => {
     info("Snippets: Extension installed.");
     await setDefaultPrefs();
     await init();
-    await detectLegacyClippings();
   }
   else if (install.reason == "update") {
     let oldVer = install.previousVersion;
@@ -195,25 +194,6 @@ async function getMostRecentHostAppWndID(wndType)
   }
 
   return rv;
-}
-
-
-async function detectLegacyClippings()
-{
-  let prefVal = await messenger.aeSnippets.getPref("extensions.aecreations.clippings.first_run");
-  if (prefVal === undefined) {
-    log("It doesn't appear that Clippings 5.7 or older was installed.");
-    return null;
-  }
-
-  let fileData = await messenger.aeSnippets.detectClippingsJSONFile();
-  if (fileData) {
-    let clippings = JSON.parse(fileData);
-    log(`Found the Clippings JSON file\nVersion: ${clippings.version}\nCreated by: ${clippings.createdBy}`);
-  }
-  else if (fileData === false) {
-    log("Clippings JSON file not found");
-  }
 }
 
 
