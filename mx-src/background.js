@@ -50,6 +50,7 @@ async function init()
 
   let compScriptOpts = {
     js: [
+      {file: "lib/purify.min.js"},
       {file: "compose.js"}
     ],
   };  
@@ -67,9 +68,7 @@ messenger.runtime.onMessage.addListener(async (msg) => {
   if (msg.id == "insert-snippet") {
     log(`Snippets: Handling message "${msg.id}".  Compose window tab ID: ${gComposeTabID}`);
 
-    let snippet = {
-      content: DOMPurify.sanitize(msg.content),
-    };
+    let snippet = {content: msg.content};
     insertSnippet(snippet);
   }
 });

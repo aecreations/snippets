@@ -32,10 +32,10 @@ function insertSnippet(content, isPlainText, htmlPasteMode)
   log("Snippets::compose.js: >> insertSnippet()");
   
   if (isPlainText) {
-    document.execCommand("insertText", false, content);
+    insertTextIntoPlainTextEditor(content);
   }
   else {
-    insertTextIntoRichTextEditor(document, content, true, htmlPasteMode);
+    insertTextIntoRichTextEditor(content, true, htmlPasteMode);
   }
 }
 
@@ -44,7 +44,41 @@ function insertSnippet(content, isPlainText, htmlPasteMode)
 // Helper functions
 //
 
-function insertTextIntoRichTextEditor(aRichTextEditorDocument, aClippingText, aAutoLineBreak, aPasteMode)
+function insertTextIntoPlainTextEditor(aClippingText)
+{
+  let hasHTMLTags = aClippingText.search(/<[a-z1-6]+( [a-z]+(\="?.*"?)?)*>/i) != -1;
+  let clippingText = aClippingText;
+
+  if (hasHTMLTags) {
+    clippingText = clippingText.replace(/&/g, "&amp;");
+    clippingText = clippingText.replace(/</g, "&lt;");
+    clippingText = clippingText.replace(/>/g, "&gt;");
+  }
+  else {
+    // Could be plain text but with angle brackets, e.g. for denoting URLs
+    // or email addresses, e.g. <joel_user@acme.com>, <http://www.acme.com>
+    let hasOpenAngleBrackets = clippingText.search(/</) != -1;
+    let hasCloseAngleBrackets = clippingText.search(/>/) != -1;
+
+    if (hasOpenAngleBrackets) {
+      clippingText = clippingText.replace(/</g, "&lt;");
+    }
+    if (hasCloseAngleBrackets) {
+      clippingText = clippingText.replace(/>/g, "&gt;");	  
+    }
+  }
+
+  let selection = document.getSelection();
+  let range = selection.getRangeAt(0);
+  range.deleteContents();
+
+  let frag = range.createContextualFragment(clippingText);
+  range.insertNode(frag);
+  range.collapse();
+}
+
+
+function insertTextIntoRichTextEditor(aClippingText, aAutoLineBreak, aPasteMode)
 {
   log("Snippets::compose.js: >> insertTextIntoRichTextEditor()");
 
@@ -78,10 +112,13 @@ function insertTextIntoRichTextEditor(aRichTextEditorDocument, aClippingText, aA
     clippingText = clippingText.replace(/\n/g, "<br>");
   }
 
-  try {
-    aRichTextEditorDocument.execCommand("insertHTML", false, clippingText);
-  }
-  catch (e) {}
+  let selection = document.getSelection();
+  let range = selection.getRangeAt(0);
+  range.deleteContents();
+
+  let frag = range.createContextualFragment(DOMPurify.sanitize(clippingText));
+  range.insertNode(frag);
+  range.collapse();
 
   return true;
 }
