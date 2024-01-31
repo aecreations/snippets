@@ -65,6 +65,10 @@
     "message": "delete"
   },
 
+  "btnFromClipbd": {
+    "message": "from clipboard"
+  },
+
   "btnImpExp": {
     "message": "import & export..."
   },

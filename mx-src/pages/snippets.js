@@ -37,6 +37,8 @@ async function init()
 
   $("delete").addEventListener("click", e => { deleteSnippet() });
 
+  $("get-from-clipbd").addEventListener("click", e => { getTextFromClipboard() });
+
   $("import-and-export").addEventListener("click", e => { importAndExport() });
 
   $("close-window").addEventListener("click", e => {
@@ -170,6 +172,43 @@ function getSelectedText()
   gSnippets.log("snippets.js::getSelectedText(): Executing compose script at compose tab ID: " + compTabID);;
   
   messenger.tabs.executeScript(compTabID, injectOpts);
+}
+
+
+async function getTextFromClipboard()
+{
+  let content = "";
+  try {
+    content = await navigator.clipboard.readText();
+  }
+  catch (e) {
+    // When the following MailExtension API is called, a puzzle piece icon will
+    // appear next to the Thunderbird menu button.
+    // User needs to click on it to grant Snippets "clipboardRead" permission.
+    let permGranted = await messenger.permissions.request({
+      permissions: ["clipboardRead"],
+    });
+
+    if (permGranted) {
+      getTextFromClipboard();
+    }
+    else {
+      alert("Snippets doesn't have permission to get data from the clipboard.");
+    }
+    return;
+  }
+
+  if (content == "") {
+    alert("clipboard is empty or does not contain textual data.");
+    return;
+  }
+
+  let name = gSnippets.createSnippetNameFromText(content);
+      
+  let db = gSnippets.getSnippetsDB();
+  let numSnippets = await db.snippets.count();
+  let newSnippetID = await db.snippets.add({name, content, displayOrder: numSnippets + 1});
+  await initSnippetsList(true);
 }
 
 
