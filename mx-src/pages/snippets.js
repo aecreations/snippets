@@ -203,6 +203,7 @@ async function insertSnippet(closeWnd)
   let snippet = await db.snippets.get(snippetID);
   let msg = {
     id: "insert-snippet",
+    snippetID,
     content: snippet.content,
   };
 
@@ -386,6 +387,11 @@ function deleteSnippet()
   else {
     snippetsList.selectedIndex = selectedIdx;
   }
+
+  messenger.runtime.sendMessage({
+    id: "snippet-deleted",
+    snippetID,
+  });
 }
 
 

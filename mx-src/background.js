@@ -6,6 +6,7 @@
 let gSnippetsDB;
 let gPrefs;
 let gComposeTabID;
+let gRecentSnippetID;
 
 
 messenger.runtime.onInstalled.addListener(async (install) => {
@@ -56,6 +57,24 @@ async function init()
   };  
   messenger.composeScripts.register(compScriptOpts);
 
+  messenger.menus.create({
+    id: "ae-snippets",
+    title: messenger.i18n.getMessage("extName"),
+    contexts: ["compose_body"],
+  });
+  messenger.menus.create({
+    id: "ae-snippets-recent",
+    title: "insert recent",
+    parentId: "ae-snippets",
+    contexts: ["compose_body"],
+  });
+  messenger.menus.create({
+    id: "ae-snippets-open",
+    title: "show snippets",
+    parentId: "ae-snippets",
+    contexts: ["compose_body"],
+  });
+  
   log("Snippets: Initialization complete.");
 }
 
@@ -70,6 +89,12 @@ messenger.runtime.onMessage.addListener(async (msg) => {
 
     let snippet = {content: msg.content};
     insertSnippet(snippet);
+    gRecentSnippetID = msg.snippetID;
+  }
+  else if (msg.id == "snippet-deleted") {
+    if (gRecentSnippetID == msg.snippetID) {
+      gRecentSnippetID = null;
+    }
   }
 });
 
@@ -79,6 +104,16 @@ messenger.composeAction.onClicked.addListener(tab => {
   gComposeTabID = tab.id;
   openSnippetsWindow();
 });
+
+messenger.menus.onClicked.addListener((info, tab) => {
+  if (info.menuItemId == "ae-snippets-open") {
+    gComposeTabID = tab.id;
+    openSnippetsWindow();
+  }
+  else if (info.menuItemId == "ae-snippets-recent") {
+    insertRecentSnippet();
+  }
+})
 
 
 messenger.commands.onCommand.addListener(async (cmdName) => {
@@ -111,6 +146,18 @@ async function setDefaultPrefs()
 
   gPrefs = defaultPrefs;
   await messenger.storage.local.set(defaultPrefs);
+}
+
+
+async function insertRecentSnippet()
+{
+  if (! gRecentSnippetID) {
+    console.warn("Snippets: No recent snippet found.");
+    return;
+  }
+
+  let snippet = await gSnippetsDB.snippets.get(gRecentSnippetID);
+  insertSnippet(snippet);
 }
 
 
