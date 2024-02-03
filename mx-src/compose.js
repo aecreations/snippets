@@ -27,15 +27,15 @@ function getSelectedText()
 }
 
 
-function insertSnippet(content, isPlainText, htmlPasteMode)
+function insertSnippet(content, isPlainText, htmlPasteMode, isQuoted)
 {
   log("Snippets::compose.js: >> insertSnippet()");
   
   if (isPlainText) {
-    insertTextIntoPlainTextEditor(content);
+    insertTextIntoPlainTextEditor(content, isQuoted);
   }
   else {
-    insertTextIntoRichTextEditor(content, true, htmlPasteMode);
+    insertTextIntoRichTextEditor(content, true, htmlPasteMode, isQuoted);
   }
 }
 
@@ -44,7 +44,7 @@ function insertSnippet(content, isPlainText, htmlPasteMode)
 // Helper functions
 //
 
-function insertTextIntoPlainTextEditor(aClippingText)
+function insertTextIntoPlainTextEditor(aClippingText, aIsQuoted)
 {
   let hasHTMLTags = aClippingText.search(/<[a-z1-6]+( [a-z]+(\="?.*"?)?)*>/i) != -1;
   let clippingText = aClippingText;
@@ -68,6 +68,11 @@ function insertTextIntoPlainTextEditor(aClippingText)
     }
   }
 
+  if (aIsQuoted) {
+    clippingText = clippingText.replace(/\n/g, "<br>&gt; ");
+    clippingText = '<span style="white-space: pre-wrap; display: block; width: 98vw;">&gt; ' + clippingText + "</span>";
+  }
+
   let selection = document.getSelection();
   let range = selection.getRangeAt(0);
   range.deleteContents();
@@ -78,7 +83,7 @@ function insertTextIntoPlainTextEditor(aClippingText)
 }
 
 
-function insertTextIntoRichTextEditor(aClippingText, aAutoLineBreak, aPasteMode)
+function insertTextIntoRichTextEditor(aClippingText, aAutoLineBreak, aPasteMode, aIsQuoted)
 {
   log("Snippets::compose.js: >> insertTextIntoRichTextEditor()");
 
@@ -110,6 +115,10 @@ function insertTextIntoRichTextEditor(aClippingText, aAutoLineBreak, aPasteMode)
   let hasLineBreakTags = clippingText.search(/<br|<p/i) != -1;
   if (aAutoLineBreak && !hasLineBreakTags) {
     clippingText = clippingText.replace(/\n/g, "<br>");
+  }
+
+  if (aIsQuoted) {
+    clippingText = '<blockquote type="cite">' + clippingText + "</blockquote>"
   }
 
   let selection = document.getSelection();

@@ -88,7 +88,7 @@ messenger.runtime.onMessage.addListener(async (msg) => {
     log(`Snippets: Handling message "${msg.id}".  Compose window tab ID: ${gComposeTabID}`);
 
     let snippet = {content: msg.content};
-    insertSnippet(snippet);
+    insertSnippet(snippet, msg.asQuoted);
     gRecentSnippetID = msg.snippetID;
   }
   else if (msg.id == "snippet-deleted") {
@@ -161,7 +161,7 @@ async function insertRecentSnippet()
 }
 
 
-async function insertSnippet(snippet)
+async function insertSnippet(snippet, insertAsQuoted)
 {
   let htmlPasteMode = gPrefs.htmlPasteMode;
 
@@ -171,9 +171,11 @@ async function insertSnippet(snippet)
   content = content.replace(/\n/g, "\\n");
 
   content = processPlaceholders(content);
+
+  insertAsQuoted = !!insertAsQuoted;
   
   let injectOpts = {
-    code: `insertSnippet("${content}", ${comp.isPlainText}, ${htmlPasteMode});`
+    code: `insertSnippet("${content}", ${comp.isPlainText}, ${htmlPasteMode}, ${insertAsQuoted});`
   };
 
   messenger.tabs.executeScript(gComposeTabID, injectOpts);

@@ -93,9 +93,10 @@ button {
     text-align: right;
 }
 
-#main-window .dlg-buttons > #insert-snippet {
+#main-window .dlg-buttons > #insert-action {
     float: left;
     margin-left: 0;
+    text-align: left;
 }
 
 #edit #snippet-editor {

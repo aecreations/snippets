@@ -244,6 +244,7 @@ async function insertSnippet(closeWnd)
     id: "insert-snippet",
     snippetID,
     content: snippet.content,
+    asQuoted: $("insert-quoted").checked,
   };
 
   await messenger.runtime.sendMessage(msg);
