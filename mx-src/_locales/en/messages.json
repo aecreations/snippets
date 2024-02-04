@@ -131,6 +131,18 @@
     }
   },
 
+  "msgClipbdEmpty": {
+    "message": "clipboard is empty or does not contain textual data."
+  },
+
+  "msgReqClipbdPerm": {
+    "message": "to continue, please grant Snippets permission to get data from the clipboard."
+  },
+
+  "msgNoClipbdPerm": {
+    "message": "Snippets doesn't have permission to get data from the clipboard."
+  },
+
   "labelPasteOptions": {
     "message": "when pasting an HTML-formatted snippet into a rich text edit box:"
   },

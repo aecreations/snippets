@@ -182,6 +182,8 @@ async function getTextFromClipboard()
     content = await navigator.clipboard.readText();
   }
   catch (e) {
+    alert(messenger.i18n.getMessage("msgReqClipbdPerm"));
+    
     // When the following MailExtension API is called, a puzzle piece icon will
     // appear next to the Thunderbird menu button.
     // User needs to click on it to grant Snippets "clipboardRead" permission.
@@ -193,13 +195,13 @@ async function getTextFromClipboard()
       getTextFromClipboard();
     }
     else {
-      alert("Snippets doesn't have permission to get data from the clipboard.");
+      alert(messenger.i18n.getMessage("msgNoClipbdPerm"));
     }
     return;
   }
 
   if (content == "") {
-    alert("clipboard is empty or does not contain textual data.");
+    alert(messenger.i18n.getMessage("msgClipbdEmpty"));
     return;
   }
 
