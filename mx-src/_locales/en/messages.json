@@ -143,6 +143,10 @@
     "message": "Snippets doesn't have permission to get data from the clipboard."
   },
 
+  "msgConfDel": {
+    "message": "are you sure?"
+  },
+
   "labelPasteOptions": {
     "message": "when pasting an HTML-formatted snippet into a rich text edit box:"
   },
