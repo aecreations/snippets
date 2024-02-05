@@ -5,7 +5,7 @@
 
 
 const aeConst = Object.freeze({
-  DEBUG: true,
+  DEBUG: false,
   MAX_NAME_LENGTH: 32,
 
   // Constants for HTML paste options
