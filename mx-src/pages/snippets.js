@@ -205,12 +205,7 @@ async function getTextFromClipboard()
     return;
   }
 
-  let name = gSnippets.createSnippetNameFromText(content);
-      
-  let db = gSnippets.getSnippetsDB();
-  let numSnippets = await db.snippets.count();
-  let newSnippetID = await db.snippets.add({name, content, displayOrder: numSnippets + 1});
-  await initSnippetsList(true);
+  $("new-snippet-content").value = DOMPurify.sanitize(content);
 }
 
 
@@ -403,7 +398,7 @@ function closeImportAndExport()
 
 function deleteSnippet()
 {
-  let confirmDel = window.confirm("are you sure?");
+  let confirmDel = window.confirm(messenger.i18n.getMessage("msgConfDel"));
   if (! confirmDel) {
     return;
   }
