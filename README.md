@@ -2,9 +2,11 @@
 ### Saves snippets of text for later pasting into Thunderbird messages
 
 Snippets was created during the course of an investigation of
-Thunderbird [MailExtensions APIs](https://thunderbird-webextensions.readthedocs.io/en/latest/index.html) for reading and modifying message composer content, IndexedDB support, ability to add menu items to the message composer context menu, opening extension pages in popup windows, and using experimental APIs.  The goal is to use this knowledge to port [Clippings for Thunderbird](https://github.com/aecreations/clippings-tb) to a MailExtension.
+Thunderbird [MailExtensions APIs](https://thunderbird-webextensions.readthedocs.io/en/latest/index.html) for reading and modifying message composer content, IndexedDB support, ability to add menu items to the message composer context menu, opening extension pages in popup windows, and using experimental APIs (in version 1.0).  The goal is to use this knowledge to port [Clippings for Thunderbird](https://github.com/aecreations/clippings-tb) to a MailExtension.
 
-Requires Thunderbird 102.0 or newer, available from the [Thunderbird website](https://www.thunderbird.net/).
+Requires Thunderbird 115.0 or newer, available from the [Thunderbird website](https://www.thunderbird.net/).
+
+**N.B.:** This Thunderbird extension was created for research purposes only - not intended for regular everyday use.  No end-user support is available.
 
 ### Features
 
@@ -14,19 +16,6 @@ Requires Thunderbird 102.0 or newer, available from the [Thunderbird website](ht
 - Placeholders for date and time
 - Import/export snippets to/from a CSV file
 
-### Things You Should Know About
-
-On first run, Snippets will detect if there is a Clippings backup JSON data file (clippings.json) in the Clippings data folder (by default, this is the Thunderbird profile folder).  It doesn't do anything with it other than report basic file properties to the debugging console.
-
 ### Known Issues
 
-See the [list of issues](https://github.com/aecreations/snippets/issues) for an up-to-date list of bugs and enhancement requests.
-
-### How To Get It
-
-1. Click [Releases](https://github.com/aecreations/snippets/releases) at the top.
-2. Look for the latest release in the list and download the XPI file.
-3. Launch Thunderbird, then click the Thunderbird menu button, and then select Add-ons.
-4. Click the gear icon at the top-right corner and then select Install Add-on From File.
-5. Locate the downloaded XPI file and then click Open.
-6. Follow the prompts to finish the installation.
+See the [list of issues](https://github.com/aecreations/snippets/issues) for an up-to-date list of bugs and limitations.
