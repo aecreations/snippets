@@ -2,12 +2,12 @@
   "manifest_version": 2,
   "name": "__MSG_extName__",
   "description": "__MSG_extDesc__",
-  "version": "2.0",
+  "version": "2.0.1a0+",
   "author": "AE Creations",
   "browser_specific_settings": {
     "gecko": {
       "id": "snippets@aecreations.github.io",
-      "strict_min_version": "115.0"
+      "strict_min_version": "140.0"
     }
   },
 
