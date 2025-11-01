@@ -60,7 +60,7 @@ async function init()
   messenger.menus.create({
     id: "ae-snippets",
     title: messenger.i18n.getMessage("extName"),
-    contexts: ["compose_body"],
+    contexts: ["compose_body", "editable"],
   });
   messenger.menus.create({
     id: "ae-snippets-recent",
@@ -72,7 +72,7 @@ async function init()
     id: "ae-snippets-open",
     title: "show snippets",
     parentId: "ae-snippets",
-    contexts: ["compose_body"],
+    contexts: ["compose_body", "editable"],
   });
   
   log("Snippets: Initialization complete.");
@@ -113,7 +113,36 @@ messenger.menus.onClicked.addListener((info, tab) => {
   else if (info.menuItemId == "ae-snippets-recent") {
     insertRecentSnippet();
   }
-})
+});
+
+messenger.menus.onShown.addListener(async (info, tab) => {
+  if (info.editable) {
+    log("Snippets: It is " + info.editable + " that the context menu is invoked from an editable element.")
+
+    let ppty = {};
+    if (!info.fieldId || info.fieldId == "composeSubject") {
+      ppty = {visible: true};
+    }
+    else {
+      ppty = {visible: false};
+    }
+    await Promise.all([
+      messenger.menus.update("ae-snippets", ppty),
+      messenger.menus.update("ae-snippets-open", ppty),
+      messenger.menus.update("ae-snippets-recent", ppty),
+    ]);
+    await messenger.menus.refresh();
+  }
+});
+
+messenger.menus.onHidden.addListener(async () => {
+  await Promise.all([
+    messenger.menus.update("ae-snippets", {visible: false}),
+    messenger.menus.update("ae-snippets-open", {visible: false}),
+    messenger.menus.update("ae-snippets-recent", {visible: false}),
+  ]);
+  await messenger.menus.refresh();
+});
 
 
 messenger.commands.onCommand.addListener(async (cmdName) => {
